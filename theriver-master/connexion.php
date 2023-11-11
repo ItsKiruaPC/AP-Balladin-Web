@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr" >
 <head>
@@ -13,16 +16,29 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form method="post" action="php/connexion.php">
+
+    <?php
+    if (isset($_SESSION['login'])) {
+      header("Location: php/reservation.php");
+      exit();
+    }
+    if (isset($_SESSION["erreur"])):
+      $errorMessage = $_SESSION["erreur"];
+      unset($_SESSION["erreur"]);
+      ?>
+    <h1><?php echo $errorMessage; ?></h1>
+    <?php endif; ?>
+    <form method="POST" action="php/connexion.php">
         <h3>Connexion</h3>
 
         <label for="username">Username</label>
-        <input type="text" placeholder="E-mail" id="username">
+        <input type="text" placeholder="Username" id="username" name="txtusername">
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Mot de passe" id="password">
+        <input type="password" placeholder="Mot de passe" id="password" name="txtpassword">
 
-        <input type="submit" id="btnvalider" value="Connecter"/>
+        <input type="submit" name="action" id="btnvalider" value="Connecter"/>
+        <input type="submit" name="action" id="btncreate" value="Création"/>
     </form>
 </body>
 </html>

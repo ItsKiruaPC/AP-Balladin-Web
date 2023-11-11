@@ -29,9 +29,9 @@
 					<ul class="d-flex flex-row align-items-start justify-content-start">
 						<li><a href="index.html">Accueil</a></li>
 						<li><a href="about.html">À propos de nous</a></li>
-						<li><a href="#">Chambres</a></li>
+						<li><a href="booking.html">Chambres</a></li>
 						<li><a href="contact.html">Contact</a></li>
-            <li><a href="connexion.html">Connexion</a></li>
+            <li><a href="connexion.php">Connexion</a></li>
 					</ul>
 				</nav>
 				<div class="book_button"><a href="booking.html">Réservation en ligne</a></div>
@@ -51,9 +51,9 @@
 				<ul>
           <li><a href="index.html">Accueil</a></li>
           <li><a href="about.html">À propos de nous</a></li>
-          <li><a href="#">Chambres</a></li>
+          <li><a href="booking.html">Chambres</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="connexion.html">Connexion</a></li>
+          <li><a href="connexion.php">Connexion</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -122,7 +122,7 @@
 									</div>
 								</div>
 								<div class="booking_price">120€/nuit</div>
-								<div class="booking_link"><a href="booking.html">Chambre de luxe</a></div>
+								<div class="booking_link"><a href="#famille">Chambre de familliale</a></div>
 							</div>
 
 							<!-- Slide -->
@@ -144,7 +144,7 @@
 									</div>
 								</div>
 								<div class="booking_price">120€/nuit</div>
-								<div class="booking_link"><a href="booking.html">Chambre familliale</a></div>
+								<div class="booking_link"><a href="#luxe">Chambre luxe</a></div>
 							</div>
 
 							<!-- Slide -->
@@ -166,7 +166,7 @@
 									</div>
 								</div>
 								<div class="booking_price">120€/nuit</div>
-								<div class="booking_link"><a href="booking.html">Chambre simple</a></div>
+								<div class="booking_link"><a href="#simple">Chambre double</a></div>
 							</div>
 
 						</div>
@@ -192,7 +192,7 @@
 				<!-- Details Content -->
 				<div class="col-xl-5 col-lg-6">
 					<div class="details_content">
-						<div class="details_title">Chambre de luxe</div>
+						<div class="details_title" id="luxe">Chambre de luxe</div>
 						<div class="details_list">
 							<ul>
 							<li>Terrasse de 27 m²</li>
@@ -237,7 +237,7 @@
 								<li>Étages supérieurs accessibles par ascenseur</li>
 							</ul>
 						</div>
-						<div class="book_now_button"><a href="#">Reserver maintenant</a></div>
+						<div class="book_now_button"><a href="php/reservation.php">Reserver maintenant</a></div>
 					</div>
 				</div>
 
@@ -254,7 +254,7 @@
 				<!-- Details Content -->
 				<div class="col-xl-5 col-lg-6 order-lg-1 order-2">
 					<div class="details_content">
-						<div class="details_title">Chambre double</div>
+						<div class="details_title" id="double">Chambre double</div>
 						<div class="details_list">
 							<ul>
 								<li>Terrasse de 27 m²</li>
@@ -299,7 +299,7 @@
 								<li>Étages supérieurs accessibles par ascenseur</li>
 							</ul>
 						</div>
-						<div class="book_now_button"><a href="#">Book Now</a></div>
+						<div class="book_now_button"><a href="php/reservation.php">Réservez maintenant</a></div>
 					</div>
 				</div>
 
@@ -320,9 +320,15 @@
 		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/special.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
-				<div class="col-xl-6 offset-xl-6 col-lg-8 offset-lg-2">
+        <!-- Details Image -->
+        <div class="col-xl-7 col-lg-6 order-lg-2 order-1">
+          <div class="details_image">
+            <div class="background_image" style="background-image:url(images/gallery_3.jpg)"></div>
+          </div>
+        </div>
+				<div class="col-xl-5 col-lg-6">
 					<div class="special_content">
-						<div class="details_title">Offre Spéciale - Chambre Familiale</div>
+						<div class="details_title" id="famille">Offre Spéciale - Chambre Familiale</div>
 						<div class="details_list">
 							<ul>
 								<li>Terrasse de 27 m²</li>
@@ -367,7 +373,7 @@
 								<li>Étages supérieurs accessibles par ascenseur</li>
 							</ul>
 						</div>
-						<div class="book_now_button"><a href="#">Réserver maintenant</a></div>
+						<div class="book_now_button"><a href="php/reservation.php">Réserver maintenant</a></div>
 					</div>
 				</div>
 			</div>

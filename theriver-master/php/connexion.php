@@ -1,48 +1,48 @@
 <?php
     session_start();
-    require("ouverture.php");
-    require("fermeture.php");
+    ?>
+<?php
+$login=$_REQUEST['txtusername'];
+$mdp=$_REQUEST['txtpassword'];
+//Vérifier si l'utilisateur est déjà connecté
 
-$login = $_REQUEST['username'];
-$mdp = $_REQUEST['password'];
-$login = filter_input(INPUT_REQUEST, 'username', FILTER_SANITIZE_STRING);
-$mdp = filter_input(INPUT_REQUEST, 'password', FILTER_SANITIZE_STRING);
-$reqresult ="SELECT * FROM client where nomClient=? and mdpClient=?";
+
+require("ouverture.php");
+$login = htmlspecialchars($login, ENT_QUOTES);
+$mdp = htmlspecialchars($mdp, ENT_QUOTES);
+$reqresult ="SELECT * FROM client where nomClient=:paramLogin and mdpClient=:paramMdp";
 
 $mesdonnees=$cnn->prepare($reqresult);
-$mesdonnees->bindParam(1,$login, PDO::PARAM_STR);
-$mesdonnees->bindParam(2,$mdp, PDO::PARAM_STR);
-//Solution A. Récupérer les données ligne par ligne avec un while
+$mesdonnees->bindParam('paramLogin',$login, PDO::PARAM_STR);
+$mesdonnees->bindParam('paramMdp',$mdp, PDO::PARAM_STR);
 try
 {
     $mesdonnees->execute();
-} catch(PDOException $e)
+}
+catch(PDOException $e)
 {
     die('<span>Erreur : </span>' . $e->getMessage());
 }
 
 // lecture de la 1ère ligne
-$uneligne = $mesdonnees->fetch();
+$unequ = $mesdonnees->fetch();
 
-// Vérification login & mdp
-if($uneligne && password_verify($mdp,$uneligne["mdpClient"]))
-{
-    $_SESSION["login"]=$login;
+  if ($unequ || password_verify($mdp, $unequ['mdpClient'])) {
+    $_SESSION["login"] = $login;
     $cost = 12;
-// Création du jeton (token) unique pour l'utilisateur connecté
-// Hashage du token
-    $_SESSION['token'] = password_hash(time()*rand(50,250), PASSWORD_BCRYPT, ['cost' => $cost]);
+    // Création du jeton (token) unique pour l'utilisateur connecté
+    // Hashage du token
+    $_SESSION['token'] = password_hash(time() * rand(50, 250), PASSWORD_BCRYPT, ['cost' => $cost]);
+    //unset($_SESSION["erreur"]);
+    header("Location: ../booking.html");  // Redirection automatique vers la page backoffice.php, si l'identification est correcte
+  } else {
+    $_SESSION["erreur"] = "Il faut saisir un login & un mot de passe correct !!!";
+    header("Location: ../connexion.php"); // Redirection automatique vers la page form.php, si l'identification est incorrecte
+  }
+// Vérification login & mdp
 
-    header("Location:../booking.html");  // Redirection automatique vers la page backoffice.php, si l'identification est correcte
-}
-else
-{
-    $_SESSION["erreur"]="Il faut saisir un login & un mot de passe correct !!!";
-    header("Location:../connexion.html"); // Redirection automatique vers la page form.php, si l'identification est incorrecte
-}
-?>
 
-/* echo("<br/>A. Nombre d'équipements : ? <br/>");
+/*echo("<br/>A. Nombre d'équipements : ? <br/>");
 $unequ = $reqresult->fetch();
 while ($unequ)
 {
@@ -58,7 +58,7 @@ Foreach ($lesequ as $unequ)
 {
     echo ($unequ["noequ"] . " " . $unequ["lib"] . "<br/>");
 }
-*/
 // Fermetures
 
-$reqresult->closeCursor();
+$reqresult->closeCursor();*/
+?>

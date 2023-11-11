@@ -30,9 +30,9 @@
 					<ul class="d-flex flex-row align-items-start justify-content-start">
 						<li class="active"><a href="index.html">Accueil</a></li>
 						<li><a href="about.html">À propos de nous</a></li>
-						<li><a href="#">Chambres</a></li>
+						<li><a href="booking.html">Chambres</a></li>
 						<li><a href="contact.html">Contact</a></li>
-						<li><a href="connexion.html">Connexion</a></li>
+						<li><a href="connexion.php">Connexion</a></li>
 					</ul>
 				</nav>
 				<div class="book_button"><a href="booking.html">Réservation en ligne</a></div>
@@ -52,9 +52,9 @@
 				<ul>
 					<li><a href="index.html">Accueil</a></li>
 					<li><a href="about.html">À propos de nous</a></li>
-					<li><a href="#">Chambres</a></li>
+					<li><a href="booking.html">Chambres</a></li>
 					<li><a href="contact.html">Contact</a></li>
-					<li><a href="connexion.html">Connexion</a></li>
+					<li><a href="connexion.php">Connexion</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -72,17 +72,12 @@
 				<div class="row">
 					<div class="col">
 						<div class="home_content text-center">
-							<div class="home_title">Réserver une chambre</div>
+							<div class="home_title">Bienvenue Chez Balladins !</div>
 							<div class="booking_form_container">
 								<form action="#" class="booking_form" id="booking_form">
-									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
-										<div class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
-											<div><input type="text" class="datepicker booking_input booking_input_a booking_in" placeholder="Arriver" required="required"></div>
-											<div><input type="text" class="datepicker booking_input booking_input_a booking_out" placeholder="Départ" required="required"></div>
-											<div><input type="number" class="booking_input booking_input_b" placeholder="Enfants" required="required"></div>
-											<div><input type="number" class="booking_input booking_input_b" placeholder="Chambre" required="required"></div>
-										</div>
-										<div><button class="booking_button trans_200">Reserver maintenant</button></div>
+									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
+											<div><input type="text" name="txtville" class="booking_input booking_input_b" placeholder="Ville" required="required"></div>
+										<div><button class="booking_button trans_200">Rechercher</button></div>
 									</div>
 								</form>
 							</div>
