@@ -102,12 +102,12 @@ require_once('php/fermeture.php');
 						<div class="home_content text-center">
 							<div class="home_title">Bienvenue Chez Balladins !</div>
 							<div class="booking_form_container">
-								<form action="#" class="booking_form" id="booking_form">
+								<form method="post" action="php/rechercher.php" class="booking_form" id="booking_form">
 									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
-                    <form method="post" action="php/rechercher.php">
-                      <div><input class="booking_input booking_input_b" type="text" name="txtville" placeholder="Nom de ville" required="required"/></div>
-                      <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
-                    </form>
+                                          <div><input class="booking_input booking_input_b" type="text" name="txtville" placeholder="Nom de ville"/></div>
+                                          <div><input class="booking_input booking_input_b" type="text" name="txtnom" placeholder="Nom de l'hotel"/></div>
+                                          <div><input class="booking_input booking_input_b" type="text" name="txtprix" placeholder="Prix maximum"/></div>
+                                          <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
 									</div>
 								</form>
 							</div>
