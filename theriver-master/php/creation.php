@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$cnn = new PDO("sqlsrv:Server=MSI\SQLEXPRESS;Database=bdciehotel", null, null);
+$cnn = new PDO("sqlsrv:Server=AURORA-B550\SQLEXPRESS;Database=bdciehotel", null, null);
 $errors = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

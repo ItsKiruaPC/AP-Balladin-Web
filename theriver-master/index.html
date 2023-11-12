@@ -28,11 +28,14 @@
 			<div class="ml-auto d-flex flex-row align-items-center justify-content-start">
 				<nav class="main_nav">
 					<ul class="d-flex flex-row align-items-start justify-content-start">
+
+
 						<li class="active"><a href="index.html">Accueil</a></li>
 						<li><a href="about.html">À propos de nous</a></li>
 						<li><a href="booking.html">Chambres</a></li>
 						<li><a href="contact.html">Contact</a></li>
-						<li><a href="connexion.php">Connexion</a></li>
+						<li><a href="connexion.php" id="logIn" style="display: block;">Connexion</a></li>
+						<li><a href="php/fermeture.php" id="logOut" style="display: none;">Déconnexion</a></li>
 					</ul>
 				</nav>
 				<div class="book_button"><a href="booking.html">Réservation en ligne</a></div>
@@ -397,7 +400,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </div>
 	</footer>
 </div>
-
+<script src="js/main.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>

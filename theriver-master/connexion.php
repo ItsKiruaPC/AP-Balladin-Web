@@ -24,11 +24,10 @@ session_start();
     }
     if (isset($_SESSION["erreur"])):
       $errorMessage = $_SESSION["erreur"];
-      unset($_SESSION["erreur"]);
       ?>
     <h1><?php echo $errorMessage; ?></h1>
     <?php endif; ?>
-    <form method="POST" action="php/connexion.php">
+    <form method="post" action="php/choix.php">
         <h3>Connexion</h3>
 
         <label for="username">Username</label>

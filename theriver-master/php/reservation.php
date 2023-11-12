@@ -2,8 +2,8 @@
 session_start();
 if(!isset($_SESSION['login']))
 {
-  header("Location: ../connexion.php");
-  die();
+    header("Location: ../connexion.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ if(!isset($_SESSION['login']))
             <li><a href="../about.html">À propos de nous</a></li>
             <li><a href="#">Chambres</a></li>
             <li><a href="../contact.html">Contact</a></li>
-            <li><a href="connexion.php">Connexion</a></li>
+            <li><a href="../connexion.php">Connexion</a></li>
           </ul>
         </nav>
         <div class="book_button"><a href="../booking.html">Réservation en ligne</a></div>
