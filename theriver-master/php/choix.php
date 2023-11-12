@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
   else
   {
     $_SESSION['erreur'] = "Erreur lors de la création du compte.";
-    header("Location: ../registration_error.php");
+    header("Location: ../connexion.php");
     exit();
   }
   $mesdonnees = null;
@@ -78,21 +78,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     if($result)
     {
       $motDePasseHache = $result['mdpClient'];
-      if (password_verify($mdp, $motDePasseHache)) {
-        // L'utilisateur est connecté avec succès
+      if (password_verify($mdp, $motDePasseHache))
+      {
+        // L'utilisateur est connecté
         $_SESSION['login'] = $login;
         $cost = 12;
         $_SESSION['token'] = password_hash(time() * rand(50, 250), PASSWORD_BCRYPT, ['cost' => $cost]);
         echo "Connexion réussie!";
         header("Location: reservation.php");
-      } else {
+      }
+      else
+      {
         // Échec de la connexion
-        echo "Nom d'utilisateur ou mot de passe incorrect.";
+        $_SESSION['erreur']="Nom d'utilisateur ou mot de passe incorrect.";
+        header("Location: ../connexion.php");
+        exit();
       }
     }
     else {
       // Échec de la connexion
-      echo "Nom d'utilisateur ou mot de passe incorrect.";
+      $_SESSION['erreur']="Nom d'utilisateur ou mot de passe incorrect.";
+      header("Location: ../connexion.php");
+      exit();
     }
 
     // Fermeture du statement et de la connexion

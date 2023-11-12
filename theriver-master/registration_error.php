@@ -15,6 +15,9 @@
   <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
   <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+  <script>
+    var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;
+  </script>
 </head>
 <body>
 
@@ -28,14 +31,23 @@
       <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
         <nav class="main_nav">
           <ul class="d-flex flex-row align-items-start justify-content-start">
-            <li class="active"><a href="index.html">Accueil</a></li>
-            <li><a href="about.html">À propos de nous</a></li>
-            <li><a href="booking.html">Chambres</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="connexion.php">Connexion</a></li>
+            <li class="active"><a href="index.php">Accueil</a></li>
+            <li><a href="about.php">À propos de nous</a></li>
+            <li><a href="booking.php">Chambres</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <?php
+            // Vérifie si l'utilisateur est connecté
+            if (isset($_SESSION['login'])) {
+              // Affiche le bouton de déconnexion
+              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+            } else {
+              // Affiche le bouton de connexion
+              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+            }
+            ?>
           </ul>
         </nav>
-        <div class="book_button"><a href="booking.html">Réservation en ligne</a></div>
+        <div class="book_button"><a href="booking.php">Réservation en ligne</a></div>
 
         <!-- Hamburger Menu -->
         <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -50,16 +62,25 @@
     <div class="menu_content">
       <nav class="menu_nav text-right">
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="about.html">À propos de nous</a></li>
-          <li><a href="booking.html">Chambres</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="connexion.php">Connexion</a></li>
+          <li><a href="index.php">Accueil</a></li>
+          <li><a href="about.php">À propos de nous</a></li>
+          <li><a href="booking.php">Chambres</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <?php
+            // Vérifie si l'utilisateur est connecté
+            if (isset($_SESSION['login'])) {
+              // Affiche le bouton de déconnexion
+              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+            } else {
+              // Affiche le bouton de connexion
+              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+            }
+            ?>
         </ul>
       </nav>
     </div>
     <div class="menu_extra">
-      <div class="menu_book text-right"><a href="booking.html">Réservation en ligne</a></div>
+      <div class="menu_book text-right"><a href="booking.php">Réservation en ligne</a></div>
     </div>
   </div>
 </div>

@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once('php/ouverture.php');
+require_once('php/fermeture.php');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,6 +20,9 @@
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+  <script>
+    var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;
+  </script>
 </head>
 <body>
 
@@ -30,15 +38,23 @@
 					<ul class="d-flex flex-row align-items-start justify-content-start">
 
 
-						<li class="active"><a href="index.html">Accueil</a></li>
-						<li><a href="about.html">À propos de nous</a></li>
-						<li><a href="booking.html">Chambres</a></li>
-						<li><a href="contact.html">Contact</a></li>
-						<li><a href="connexion.php" id="logIn" style="display: block;">Connexion</a></li>
-						<li><a href="php/fermeture.php" id="logOut" style="display: none;">Déconnexion</a></li>
+						<li class="active"><a href="index.php">Accueil</a></li>
+						<li><a href="about.php">À propos de nous</a></li>
+						<li><a href="booking.php">Chambres</a></li>
+						<li><a href="contact.php">Contact</a></li>
+            <?php
+            // Vérifie si l'utilisateur est connecté
+            if (isset($_SESSION['login'])) {
+              // Affiche le bouton de déconnexion
+              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+            } else {
+              // Affiche le bouton de connexion
+              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+            }
+            ?>
 					</ul>
 				</nav>
-				<div class="book_button"><a href="booking.html">Réservation en ligne</a></div>
+				<div class="book_button"><a href="booking.php">Réservation en ligne</a></div>
 
 				<!-- Hamburger Menu -->
 				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -53,11 +69,20 @@
 		<div class="menu_content">
 			<nav class="menu_nav text-right">
 				<ul>
-					<li><a href="index.html">Accueil</a></li>
-					<li><a href="about.html">À propos de nous</a></li>
-					<li><a href="booking.html">Chambres</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="connexion.php">Connexion</a></li>
+					<li><a href="index.php">Accueil</a></li>
+					<li><a href="about.php">À propos de nous</a></li>
+					<li><a href="booking.php">Chambres</a></li>
+					<li><a href="contact.php">Contact</a></li>
+					<?php
+            // Vérifie si l'utilisateur est connecté
+            if (isset($_SESSION['login'])) {
+              // Affiche le bouton de déconnexion
+              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+            } else {
+              // Affiche le bouton de connexion
+              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+            }
+            ?>
 				</ul>
 			</nav>
 		</div>
@@ -79,8 +104,10 @@
 							<div class="booking_form_container">
 								<form action="#" class="booking_form" id="booking_form">
 									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
-											<div><input type="text" name="txtville" class="booking_input booking_input_b" placeholder="Ville" required="required"></div>
-										<div><button class="booking_button trans_200">Rechercher</button></div>
+                    <form method="post" action="php/rechercher.php">
+                      <div><input class="booking_input booking_input_b" type="text" name="txtville" placeholder="Nom de ville" required="required"/></div>
+                      <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
+                    </form>
 									</div>
 								</form>
 							</div>
@@ -269,7 +296,7 @@
 								<div class="background_image" style="background-image:url(images/booking_1.jpg)"></div>
 								<div class="booking_overlay trans_200"></div>
 								<div class="booking_price">80€/nuit</div>
-								<div class="booking_link"><a href="booking.html">La chambre familliale</a></div>
+								<div class="booking_link"><a href="booking.php">La chambre familliale</a></div>
 							</div>
 
 							<!-- Slide -->
@@ -277,7 +304,7 @@
 								<div class="background_image" style="background-image:url(images/booking_2.jpg)"></div>
 								<div class="booking_overlay trans_200"></div>
 								<div class="booking_price">120€/nuit</div>
-								<div class="booking_link"><a href="booking.html">Chambre de luxe</a></div>
+								<div class="booking_link"><a href="booking.php">Chambre de luxe</a></div>
 							</div>
 
 							<!-- Slide -->
@@ -285,7 +312,7 @@
 								<div class="background_image" style="background-image:url(images/booking_3.jpg)"></div>
 								<div class="booking_overlay trans_200"></div>
 								<div class="booking_price">60€/nuit</div>
-								<div class="booking_link"><a href="booking.html">Chambre simple</a></div>
+								<div class="booking_link"><a href="booking.php">Chambre simple</a></div>
 							</div>
 
 						</div>

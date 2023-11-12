@@ -18,16 +18,13 @@ session_start();
     </div>
 
     <?php
-    if (isset($_SESSION['login'])) {
-      header("Location: php/reservation.php");
-      exit();
-    }
     if (isset($_SESSION["erreur"])):
       $errorMessage = $_SESSION["erreur"];
       ?>
-    <h1><?php echo $errorMessage; ?></h1>
-    <?php endif; ?>
+      <h1 class="erreur" style="color: red"><?php echo $errorMessage; ?></h1>
+    <?php endif;?>
     <form method="post" action="php/choix.php">
+
         <h3>Connexion</h3>
 
         <label for="username">Username</label>

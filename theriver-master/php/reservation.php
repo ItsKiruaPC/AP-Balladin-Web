@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once ('ouverture.php');
+require_once ('fermeture.php');
 if(!isset($_SESSION['login']))
 {
     header("Location: ../connexion.php");
@@ -36,14 +38,14 @@ if(!isset($_SESSION['login']))
       <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
         <nav class="main_nav">
           <ul class="d-flex flex-row align-items-start justify-content-start">
-            <li class="active"><a href="../index.html">Accueil</a></li>
-            <li><a href="../about.html">À propos de nous</a></li>
-            <li><a href="#">Chambres</a></li>
-            <li><a href="../contact.html">Contact</a></li>
-            <li><a href="../connexion.php">Connexion</a></li>
+            <li class="active"><a href="../index.php">Accueil</a></li>
+            <li><a href="../about.php">À propos de nous</a></li>
+            <li><a href="../booking.php">Chambres</a></li>
+            <li><a href="../contact.php">Contact</a></li>
+            <li><a href="../connexion.php" id="logOut">Déconnexion</a></li>;
           </ul>
         </nav>
-        <div class="book_button"><a href="../booking.html">Réservation en ligne</a></div>
+        <div class="book_button"><a href="../booking.php">Réservation en ligne</a></div>
 
         <!-- Hamburger Menu -->
         <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -58,11 +60,11 @@ if(!isset($_SESSION['login']))
     <div class="menu_content">
       <nav class="menu_nav text-right">
         <ul>
-          <li><a href="../index.html">Accueil</a></li>
-          <li><a href="../about.html">À propos de nous</a></li>
-          <li><a href="../booking.html">Chambres</a></li>
-          <li><a href="../contact.html">Contact</a></li>
-          <li><a href="connexion.php">Connexion</a></li>
+          <li><a href="../index.php">Accueil</a></li>
+          <li><a href="../about.php">À propos de nous</a></li>
+          <li><a href="../booking.php">Chambres</a></li>
+          <li><a href="../contact.php">Contact</a></li>
+          <li><a href="connexion.php" id="logOut">Déconnexion</a></li>;
         </ul>
       </nav>
     </div>
@@ -154,8 +156,8 @@ if(!isset($_SESSION['login']))
         <!-- Footer images -->
         <div class="col-lg-3">
           <div class="certificates d-flex flex-row align-items-start justify-content-lg-between justify-content-start flex-lg-nowrap flex-wrap">
-            <div class="cert"><img src="images/cert_1.png" alt=""></div>
-            <div class="cert"><img src="images/cert_2.png" alt=""></div>
+            <div class="cert"><img src="../images/cert_1.png" alt=""></div>
+            <div class="cert"><img src="../images/cert_2.png" alt=""></div>
           </div>
         </div>
       </div>
