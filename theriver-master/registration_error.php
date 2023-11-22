@@ -39,7 +39,7 @@
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -70,7 +70,7 @@
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';

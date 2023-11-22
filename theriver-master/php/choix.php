@@ -5,6 +5,7 @@ require_once('fermeture.php');
 
 $login = $_REQUEST['txtusername'];
 $mdp = $_REQUEST['txtpassword'];
+$txtnohotel = $_REQUEST['txtnohotel'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action']=="Création")
 {
@@ -84,8 +85,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
         $_SESSION['login'] = $login;
         $cost = 12;
         $_SESSION['token'] = password_hash(time() * rand(50, 250), PASSWORD_BCRYPT, ['cost' => $cost]);
+        $_SESSION['nohotel'] = $txtnohotel;
         echo "Connexion réussie!";
-        header("Location: reservation.php");
+        header("Location: ../reservation_form.php");
       }
       else
       {

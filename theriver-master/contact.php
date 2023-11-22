@@ -31,7 +31,7 @@ require_once('php/fermeture.php');
 
 	<header class="header">
 		<div class="header_content d-flex flex-row align-items-center justify-content-start">
-			<div class="logo"><a href="#">Balladins</a></div>
+			<div class="logo"><a href="index.php">Balladins</a></div>
 			<div class="ml-auto d-flex flex-row align-items-center justify-content-start">
 				<nav class="main_nav">
 					<ul class="d-flex flex-row align-items-start justify-content-start">
@@ -43,7 +43,7 @@ require_once('php/fermeture.php');
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -51,7 +51,7 @@ require_once('php/fermeture.php');
             ?>
 					</ul>
 				</nav>
-				<div class="book_button"><a href="booking.php">Réservation en ligne</a></div>
+				<div class="book_button"><a href="reservation.php">Réservation en ligne</a></div>
 
 				<!-- Hamburger Menu -->
 				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -74,7 +74,7 @@ require_once('php/fermeture.php');
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -84,7 +84,7 @@ require_once('php/fermeture.php');
 			</nav>
 		</div>
 		<div class="menu_extra">
-			<div class="menu_book text-right"><a href="#">Réservation en ligne</a></div>
+			<div class="menu_book text-right"><a href="reservation.php">Réservation en ligne</a></div>
 		</div>
 	</div>
 
@@ -97,19 +97,8 @@ require_once('php/fermeture.php');
 				<div class="row">
 					<div class="col">
 						<div class="home_content text-center">
-							<div class="home_title">Réserver une chambre</div>
+							<div class="home_title">Contact</div>
 							<div class="booking_form_container">
-								<form action="#" class="booking_form" id="booking_form">
-									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
-										<div class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
-											<div><input type="text" class="datepicker booking_input booking_input_a booking_in" placeholder="Arriver" required="required"></div>
-											<div><input type="text" class="datepicker booking_input booking_input_a booking_out" placeholder="Départ" required="required"></div>
-											<div><input type="number" class="booking_input booking_input_b" placeholder="Enfants" required="required"></div>
-											<div><input type="number" class="booking_input booking_input_b" placeholder="Chambre" required="required"></div>
-										</div>
-										<div><button class="booking_button trans_200">Reserver maintenant</button></div>
-									</div>
-								</form>
 							</div>
 						</div>
 					</div>

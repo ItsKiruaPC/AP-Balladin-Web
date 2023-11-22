@@ -20,9 +20,8 @@ require_once('php/fermeture.php');
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-  <script>
-    var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;
-  </script>
+  <script>var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;</script>
+  <script src="js/main.js"></script>
 </head>
 <body>
 
@@ -32,7 +31,7 @@ require_once('php/fermeture.php');
 
 	<header class="header">
 		<div class="header_content d-flex flex-row align-items-center justify-content-start">
-			<div class="logo"><a href="#">Balladins</a></div>
+			<div class="logo"><a href="">Balladins</a></div>
 			<div class="ml-auto d-flex flex-row align-items-center justify-content-start">
 				<nav class="main_nav">
 					<ul class="d-flex flex-row align-items-start justify-content-start">
@@ -46,7 +45,7 @@ require_once('php/fermeture.php');
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -54,7 +53,7 @@ require_once('php/fermeture.php');
             ?>
 					</ul>
 				</nav>
-				<div class="book_button"><a href="booking.php">Réservation en ligne</a></div>
+				<div class="book_button"><a href="reservation.php">Réservation en ligne</a></div>
 
 				<!-- Hamburger Menu -->
 				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -77,7 +76,7 @@ require_once('php/fermeture.php');
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="connexion.php" id="logOut">Déconnexion</a></li>';
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -87,7 +86,7 @@ require_once('php/fermeture.php');
 			</nav>
 		</div>
 		<div class="menu_extra">
-			<div class="menu_book text-right"><a href="#">Réservation en ligne</a></div>
+			<div class="menu_book text-right"><a href="reservation.php">Réservation en ligne</a></div>
 		</div>
 	</div>
 
@@ -104,11 +103,13 @@ require_once('php/fermeture.php');
 							<div class="booking_form_container">
 								<form method="post" action="php/rechercher.php" class="booking_form" id="booking_form">
 									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
-                                          <div><input class="booking_input booking_input_b" type="text" name="txtville" placeholder="Nom de ville"/></div>
-                                          <div><input class="booking_input booking_input_b" type="text" name="txtnom" placeholder="Nom de l'hotel"/></div>
-                                          <div><input class="booking_input booking_input_b" type="text" name="txtprix" placeholder="Prix maximum"/></div>
-                                          <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
-									</div>
+                    <div class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
+                    <div><input class="booking_input booking_input_b" type="text" name="txtville" placeholder="Nom de ville"/></div>
+                    <div><input class="booking_input booking_input_b" type="text" name="txtnom" placeholder="Nom de l'hotel"/></div>
+                    <div><input class="booking_input booking_input_b" type="number" step="0.01" name="txtprix" placeholder="Prix maximum"/></div>
+                    <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
+                    </div>
+                    </div>
 								</form>
 							</div>
 						</div>
@@ -427,7 +428,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </div>
 	</footer>
 </div>
-<script src="js/main.js"></script>
+
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>

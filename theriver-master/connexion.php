@@ -12,6 +12,7 @@ session_start();
     <link rel="stylesheet" href="styles/connexion.css">
 </head>
 <body>
+
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
@@ -33,6 +34,7 @@ session_start();
         <label for="password">Password</label>
         <input type="password" placeholder="Mot de passe" id="password" name="txtpassword">
 
+        <input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['txtnohotel'])){echo $_REQUEST['txtnohotel'];} ?>"/>
         <input type="submit" name="action" id="btnvalider" value="Connecter"/>
         <input type="submit" name="action" id="btncreate" value="Création"/>
     </form>

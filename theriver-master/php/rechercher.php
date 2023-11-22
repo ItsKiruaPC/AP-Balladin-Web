@@ -21,23 +21,53 @@ session_start();
 require_once ('ouverture.php');
 require_once ('fermeture.php');
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     $ville=$_REQUEST['txtville'];
     $nom=$_REQUEST['txtnom'];
     $prix=$_REQUEST['txtprix'];
-    $ville=htmlspecialchars($ville);
-    $nom=htmlspecialchars($nom);
-    $prix=htmlspecialchars($prix);
-    $ville = '%'.$ville.'%';
-    $nom = '%'.$nom.'%';
+    $ville=htmlspecialchars($ville, ENT_QUOTES);
+    $nom=htmlspecialchars($nom,ENT_QUOTES);
+    $prix=htmlspecialchars($prix, ENT_QUOTES);
     $cnn = connexionBDD();
-    $requete="select * from hotel where ville like ? or nom like ? or prix<=?";
+    $requete="select * from hotel";
+if ($ville!="")
+{
+  $requete=$requete . " where ville like '%$ville%'";
+  if ($nom!="")
+  {
+    $requete=$requete . " and nom like '%$nom%'";
+    if ($prix!="")
+    {
+      $requete=$requete . " and prix<= $prix order by prix desc";
+    }
+  }
+  else if ($prix!="")
+  {
+    $requete=$requete . " and prix<= $prix order by prix desc";
+  }
+}
+
+elseif ($nom != "")
+{
+  $requete=$requete . " where nom like '%$nom%'";
+  if ($prix!="")
+  {
+    $requete=$requete . " and prix <=$prix order by prix desc";
+  }
+}
+elseif ($prix!="")
+{
+    $requete=$requete . " where prix <=$prix order by prix desc";
+}
+else
+{
+  $requete=$requete . " order by ville";
+}
     $mesdonnees=$cnn->prepare($requete);
     $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
     $mesdonnees->bindParam(2,$nom,PDO::PARAM_STR);
-    $mesdonnees->bindParam(3,$prix,PDO::PARAM_INT);
+    $mesdonnees->bindParam(3,$prix,PDO::PARAM_STR);
     try
     {
         $mesdonnees->execute();
@@ -65,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 <li><a href="../about.php">À propos de nous</a></li>
                                 <li><a href="../booking.php">Chambres</a></li>
                                 <li><a href="../contact.php">Contact</a></li>
-                                <li><a href="../connexion.php" id="logOut">Déconnexion</a></li>;
+                                <li><a href="../connexion.php" id="logOut">Déconnexion</a></li>
                             </ul>
                         </nav>
                         <div class="book_button"><a href="../booking.php">Réservation en ligne</a></div>
@@ -87,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             <li><a href="../about.php">À propos de nous</a></li>
                             <li><a href="../booking.php">Chambres</a></li>
                             <li><a href="../contact.php">Contact</a></li>
-                            <li><a href="connexion.php" id="logOut">Déconnexion</a></li>;
+                            <li><a href="../connexion.php" id="logOut">Déconnexion</a></li>;
                         </ul>
                     </nav>
                 </div>
@@ -128,6 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="booking_item_content">
           <div class="booking_item_list">
             <ul><?php
+                $nohotel=$uneligne['nohotel'];
                 echo "<li>Adresse principal : ".$uneligne['adr1']."</li>";
                 echo "<li>Adresse secondaire : ".$uneligne['adr2'].'</li>';
                 echo "<li>Code Postal : ".$uneligne['cp'].'</li>';
@@ -138,7 +169,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
           </div>
         </div>
       <div class="booking_price"><?php echo intval($uneligne['prix'])?>€/nuit</div>
-      <div class="booking_link"><a style="color: white"><?php echo $uneligne['nom']?></a></div>
+        <form method="post" action="../booking.php">
+          <button class="booking_link" type="submit" name="nohotel" value="<?php echo $nohotel ?>"><?php echo $uneligne['nom']?></button>
+        </form>
       </div>
     <?php
     }?>

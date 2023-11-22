@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
   if (logOut) {
     logOut.addEventListener("click", function() {
       // Envoie une requête au serveur pour déconnecter l'utilisateur
-      fetch("../php/deconnexion.php", {
-        method: "POST",
+      fetch("php/deconnexion.php", {
+        method: "post",
         headers: {
           "Content-Type": "application/json",
         },
@@ -22,8 +22,9 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
+            console.log("Déconnexion réussie, redirection en cours...");
+            window.location.href = "../index.php";
             // Si la déconnexion réussit, redirige vers la page de connexion
-            window.location.href = "../connexion.php";
           } else {
             // Gérez les erreurs si nécessaire
             console.error(data.message);
@@ -34,5 +35,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
   }
-  // Affiche le bouton de déconnexion si l'utilisateur est connecté
 });
