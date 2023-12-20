@@ -36,3 +36,20 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+function afficher()
+{
+  var id = document.getElementById("test");
+    var button = document.getElementById("button");
+    if(id.style.display=="block")
+    {
+      id.style.display="none";
+    }
+    else
+    {
+      id.style.display="block";
+    }
+}
+datePickerMin.min = new Date().toLocaleDateString("fr-ca")
+datePickerMin.addEventListener('change', function() {
+  document.getElementById("datePickerMax").setAttribute('min', this.value);
+});

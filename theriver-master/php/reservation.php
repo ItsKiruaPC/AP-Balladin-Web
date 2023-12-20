@@ -7,8 +7,8 @@ $nomClient = $_SESSION['login'];
 $nohotel = $_REQUEST['txtnohotel'];
 $dateD = $_REQUEST['dateD'];
 $dateF = $_REQUEST['dateF'];
-$chambre = $_REQUEST['lstchambre'];
-// Échappement des variables pour éviter les injections SQL
+$chambres = array_map('intval', explode(',', trim($_POST["listchambres"])));;
+
 $nohotel = intval($nohotel); // Assurez-vous que $nohotel est un entier
 $dateD = htmlspecialchars($dateD, ENT_QUOTES);
 $dateF = htmlspecialchars($dateF, ENT_QUOTES);
@@ -26,29 +26,31 @@ for ($i = 0; $i < 4; $i++) {
 }
 $code = (float)$code;
 
-function connexionBDD()
-{
-
-}
-
 $cnn = connexionBDD();
+if ($nohotel==0)
+{
+  $_SESSION['erreur'] = "Veuillez choisir un hotel";
+  header("Location: ../index.php");
+  exit();
+}
 $requete= $cnn->prepare("select * from client where nomClient= :nomClient");
 $requete ->execute(array(':nomClient' => $nomClient));
 $leslignes = $requete->fetch(PDO::FETCH_ASSOC);
+
 if ($leslignes) {
   $mail = $leslignes['email'];
   $noClient = $leslignes['noClient'];
-  $chambreDisponible = true; // Indicateur pour vérifier la disponibilité de la chambre
+  $chambreDisponible = true;
 
 // Vérifier si la chambre est déjà réservée pour les dates spécifiées
-  foreach ($chambre as $unechambre) {
+  foreach ($chambres as $unechambre) {
     $requeteCheckChambre = $cnn->prepare("SELECT COUNT(*) FROM reservation r INNER JOIN reserv c ON r.nores = c.nores WHERE r.datefin >= ? AND r.datedeb <= ? AND c.nochambre = ? and c.nohotel= ?");
     $requeteCheckChambre->execute(array($dateD, $dateF, $unechambre, $nohotel));
     $resultat = $requeteCheckChambre->fetchColumn();
 
     if ($resultat > 0) {
-      $chambreDisponible = false; // La chambre est déjà réservée
-      break; // Sortir de la boucle dès qu'une chambre est trouvée déjà réservée
+      $chambreDisponible = false;
+      break;
     }
   }
   if ($chambreDisponible) {
@@ -56,15 +58,25 @@ if ($leslignes) {
     $requete0->execute();
     $donnee = $requete0->fetchColumn();
     $donnee++;
-    $requete1 = $cnn->prepare("INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $requete1->execute(array($donnee, $nohotel, $dateD, $dateF, $nomClient, $mail, $code, $noClient));
+    if($dateD>=date("Y-m-d") && $dateF>$dateD)
+    {
+      $requete1 = $cnn->prepare("INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+      $requete1->execute(array($donnee, $nohotel, $dateD, $dateF, $nomClient, $mail, $code, $noClient));
 
-    foreach ($chambre as $unechambre) {
-      $requete2 = $cnn->prepare("INSERT INTO reserv VALUES (?, ?, ?)");
-      $requete2->execute(array($donnee, $nohotel, $unechambre));
+      foreach ($chambres as $unechambre) {
+        $requete2 = $cnn->prepare("INSERT INTO reserv VALUES (?, ?, ?)");
+        $requete2->execute(array($donnee, $nohotel, $unechambre));
+      }
+    }
+    else
+    {
+      $_SESSION['erreur'] = "La date est soit trop ancienne comparer à aujourd'hui ou la date de fin s'arrete avant le début";
     }
   }
+  else
+    $_SESSION['erreur'] = "La chambre est déjà réservée pour les dates spécifiées.";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/html">
@@ -95,14 +107,36 @@ if ($leslignes) {
           <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
             <nav class="main_nav">
               <ul class="d-flex flex-row align-items-start justify-content-start">
-                <li class="active"><a href="../index.php">Accueil</a></li>
+                <li><a href="../index.php">Accueil</a></li>
                 <li><a href="../about.php">À propos de nous</a></li>
                 <li><a href="../booking.php">Chambres</a></li>
                 <li><a href="../contact.php">Contact</a></li>
-                <li><a href="../connexion.php" id="logOut">Déconnexion</a></li>
+                <?php
+                // Vérifie si l'utilisateur est connecté
+                if (isset($_SESSION['login'])) {
+                  // Affiche le bouton de déconnexion
+                  echo '<div class="book_button"  onclick="afficher()">
+          <div class="header-user_wrap">
+            <div class="header-user" style="background-image: url(../photo/01.jpg);" ></div>
+            <svg class="header-user_arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+              <path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: currentColor;"></path>
+            </svg>
+          </div>
+          <div class="header-user_menu" id="test">
+            <ul class="compte">
+              <li><a href="../mesreservation.php">Mes réservations</a></li>
+              <li><a href="" id="logOut">Deconnexion</a></li>
+              </ul>
+          </div>
+        </div>';
+                } else {
+                  // Affiche le bouton de connexion
+                  echo '<li><a href="../connexion.php" id="logIn">Connexion</a></li>';
+                }
+                ?>
               </ul>
             </nav>
-            <div class="book_button"><a href="../booking.php">Réservation en ligne</a></div>
+
 
             <!-- Hamburger Menu -->
             <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -121,14 +155,22 @@ if ($leslignes) {
               <li><a href="../about.php">À propos de nous</a></li>
               <li><a href="../booking.php">Chambres</a></li>
               <li><a href="../contact.php">Contact</a></li>
-              <li><a href="../connexion.php" id="logOut">Déconnexion</a></li>;
+              <?php
+              // Vérifie si l'utilisateur est connecté
+              if (isset($_SESSION['login'])) {
+                echo '<li><a href="../mesreservation.php">Mes réservations</a></li>';
+                // Affiche le bouton de déconnexion
+                echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+              } else {
+                // Affiche le bouton de connexion
+                echo '<li><a href="../connexion.php" id="logIn">Connexion</a></li>';
+              }
+              ?>
             </ul>
           </nav>
         </div>
-        <div class="menu_extra">
-          <div class="menu_book text-right"><a href="#">Réservation en ligne</a></div>
-        </div>
       </div>
+    </div>
       <!-- Home -->
 
       <div class="home">
@@ -155,15 +197,22 @@ if ($leslignes) {
               <div class="booking_item">
                 <ul>
                   <?php
-                  if ($chambreDisponible) {
-                  echo "<h1>Réservation effectuer</h1>";
-                  echo "<h1>Numéro de réservation: ".$donnee."</h1>";
-                  echo "<h1>Code d'accée: ".$code."</h1>";
+
+                  if ($chambreDisponible)
+                  {
+                    if ($dateD >= date("Y-m-d") && $dateF > $dateD)
+                    {
+                      echo "<h1 style='display: flex; justify-content: center'>Réservation effectuer</h1>";
+                      echo "<h1 style='display: flex; justify-content: center'>Numéro de réservation: " . $donnee . "</h1>";
+                      echo "<h1 style='display: flex; justify-content: center'>Code d'accée: " . $code . "</h1>";
+                    }
+                    else
+                      echo "<h1>$_SESSION[erreur]</h1>";
+                    unset($_SESSION['erreur']);
                   }
                   else
-                  {
-                    echo "<h1>La chambre est déjà réservée pour les dates spécifiées.</h1>";
-                  }?>
+                    echo "<h1>$_SESSION[erreur]</h1>";
+                  unset($_SESSION['erreur']);?>
                 </ul>
           </div>
         </div>

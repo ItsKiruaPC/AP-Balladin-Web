@@ -2,14 +2,15 @@
 session_start();
 require_once('ouverture.php');
 require_once('fermeture.php');
-
 $login = $_REQUEST['txtusername'];
 $mdp = $_REQUEST['txtpassword'];
+$mail = $_REQUEST['txtmail'];
 $txtnohotel = $_REQUEST['txtnohotel'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action']=="Création")
 {
-  $login=htmlspecialchars($_REQUEST['txtusername'],ENT_QUOTES);
+  $login=htmlspecialchars($login,ENT_QUOTES);
+  $mail=htmlspecialchars($mail,ENT_QUOTES);
   $errors = array();
 
   if (empty($login)) {
@@ -18,6 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
 
   if (empty($mdp)) {
     $errors[] = "Le mot de passe est requis.";
+  }
+  if(empty($mail))
+  {
+    $errors[] = "Le mail est requis.";
   }
 
   if (empty($errors))
@@ -29,19 +34,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     $count = $mesdonnees->fetchColumn();
 
     if ($count > 0) {
-      $_SESSION['erreur'] = "Le nom d'utilisateur existe déjà.";
+      $_SESSION['erreur1'] = "Le nom d'utilisateur existe déjà.";
       header("Location: ../connexion.php");
       exit();
     }
-    $reqresult = "INSERT INTO client (nomClient, mdpClient) VALUES (?, ?)";
+    $reqresult = "INSERT INTO client (nomClient, mdpClient, email) VALUES (?, ?, ?)";
     $mesdonnees = $cnn->prepare($reqresult);
     $hashedPassword = password_hash($mdp, PASSWORD_BCRYPT);
     try
     {
-      $mesdonnees->execute([$login, $hashedPassword]);
+      $mesdonnees->execute([$login, $hashedPassword, $mail]);
       if ($mesdonnees->rowCount() > 0)
       {
-        $_SESSION['erreur']="Compte créé avec succès!";
+        $_SESSION['erreur1']="Compte créé avec succès!";
         header("Location: ../connexion.php");
         exit();
       }
@@ -53,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
   }
   else
   {
-    $_SESSION['erreur'] = "Erreur lors de la création du compte.";
+    $_SESSION['erreur1'] = "Erreur lors de la création du compte.";
     header("Location: ../connexion.php");
     exit();
   }
@@ -92,14 +97,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
       else
       {
         // Échec de la connexion
-        $_SESSION['erreur']="Nom d'utilisateur ou mot de passe incorrect.";
+        $_SESSION['erreur1']="Nom d'utilisateur ou mot de passe incorrect.";
         header("Location: ../connexion.php");
         exit();
       }
     }
     else {
       // Échec de la connexion
-      $_SESSION['erreur']="Nom d'utilisateur ou mot de passe incorrect.";
+      $_SESSION['erreur1']="Nom d'utilisateur ou mot de passe incorrect.";
       header("Location: ../connexion.php");
       exit();
     }

@@ -1,10 +1,18 @@
 <?php
 session_start();
+if(isset($_SESSION['login']))
+{
+  $txtnohotel = $_REQUEST['txtnohotel'];
+  $_SESSION['nohotel'] = $txtnohotel;
+  header("Location: reservation_form.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr" >
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Connexion - Veuillez vous connecter</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -18,21 +26,24 @@ session_start();
         <div class="shape"></div>
     </div>
 
-    <?php
-    if (isset($_SESSION["erreur"])):
-      $errorMessage = $_SESSION["erreur"];
-      ?>
-      <h1 class="erreur" style="color: red"><?php echo $errorMessage; ?></h1>
-    <?php endif;?>
+
     <form method="post" action="php/choix.php">
 
         <h3>Connexion</h3>
+        <?php
+        if (isset($_SESSION["erreur1"])):
+            $errorMessage = $_SESSION["erreur1"];
+            ?>
+            <h1 class="erreur" style="color: red; font-size: 15px; text-align: center"><?php echo $errorMessage; ?></h1>
+        <?php endif;?>
+        <label for="username">Utilisateur</label>
+        <input type="text" autocomplete="off" placeholder="Username" id="username" name="txtusername">
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Username" id="username" name="txtusername">
+        <label for="password">Mot de passe</label>
+        <input type="password" autocomplete="off" placeholder="Mot de passe" id="password" name="txtpassword">
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Mot de passe" id="password" name="txtpassword">
+        <label for="mail">E-Mail (pas besoin si connexion)</label>
+        <input type="mail" placeholder="Adresse mail" id="mail" name="txtmail">
 
         <input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['txtnohotel'])){echo $_REQUEST['txtnohotel'];} ?>"/>
         <input type="submit" name="action" id="btnvalider" value="Connecter"/>

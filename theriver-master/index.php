@@ -20,10 +20,9 @@ require_once('php/fermeture.php');
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-  <script>var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;</script>
-  <script src="js/main.js"></script>
+<script>var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;</script>
+<script src="js/main.js"></script>
 </head>
-<body>
 
 <div class="super_container">
 
@@ -45,7 +44,20 @@ require_once('php/fermeture.php');
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+              echo '<div class="book_button"  onclick="afficher()">
+          <div class="header-user_wrap">
+            <div class="header-user" style="background-image: url(photo/01.jpg);" ></div>
+            <svg class="header-user_arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+              <path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: currentColor;"></path>
+            </svg>
+          </div>
+          <div class="header-user_menu" id="test">
+            <ul class="compte">
+              <li><a href="mesreservation.php">Mes réservations</a></li>
+              <li><a href="" id="logOut">Deconnexion</a></li>
+              </ul>
+          </div>
+        </div>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -53,7 +65,7 @@ require_once('php/fermeture.php');
             ?>
 					</ul>
 				</nav>
-				<div class="book_button"><a href="reservation.php">Réservation en ligne</a></div>
+
 
 				<!-- Hamburger Menu -->
 				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -75,6 +87,7 @@ require_once('php/fermeture.php');
 					<?php
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
+              echo '<li><a href="mesreservation.php">Mes réservations</a></li>';
               // Affiche le bouton de déconnexion
               echo '<li><a href="" id="logOut">Déconnexion</a></li>';
             } else {
@@ -85,11 +98,8 @@ require_once('php/fermeture.php');
 				</ul>
 			</nav>
 		</div>
-		<div class="menu_extra">
-			<div class="menu_book text-right"><a href="reservation.php">Réservation en ligne</a></div>
-		</div>
 	</div>
-
+</div>
 	<!-- Home -->
 
 	<div class="home">
@@ -100,16 +110,20 @@ require_once('php/fermeture.php');
 					<div class="col">
 						<div class="home_content text-center">
 							<div class="home_title">Bienvenue Chez Balladins !</div>
+              <?php
+              if (isset($_SESSION['erreur']))
+                echo "<h2 style='color: red'>$_SESSION[erreur]</h2>";
+              ?>
 							<div class="booking_form_container">
 								<form method="post" action="php/rechercher.php" class="booking_form" id="booking_form">
 									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
                     <div class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
-                    <div><input class="booking_input booking_input_b" type="text" name="txtville" placeholder="Nom de ville"/></div>
-                    <div><input class="booking_input booking_input_b" type="text" name="txtnom" placeholder="Nom de l'hotel"/></div>
-                    <div><input class="booking_input booking_input_b" type="number" step="0.01" name="txtprix" placeholder="Prix maximum"/></div>
+                    <div><input class="booking_input booking_input_b" type="text" autocomplete="off" name="txtville"  placeholder="Nom de ville"/></div>
+                    <div><input class="booking_input booking_input_b" type="text" autocomplete="off" name="txtnom" placeholder="Nom de l'hotel"/></div>
+                    <div><input class="booking_input booking_input_b" type="number" autocomplete="off" step="0.01" name="txtprix" placeholder="Prix maximum"/></div>
                     <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
                     </div>
-                    </div>
+                  </div>
 								</form>
 							</div>
 						</div>
@@ -427,8 +441,6 @@ require_once('php/fermeture.php');
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
 </div>
 	</footer>
-</div>
-
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>

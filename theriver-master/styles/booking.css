@@ -36,6 +36,10 @@
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
+html
+{
+  scroll-behavior: smooth;
+}
 body
 {
 	font-family: 'Raleway', sans-serif;
@@ -120,7 +124,7 @@ p a:hover::after
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 48px;}
 h2{font-size: 36px;}
@@ -137,14 +141,14 @@ h1, h2, h3, h4, h5, h6
 	color: #393939;
 	font-weight: 600;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 img
 {
@@ -372,11 +376,73 @@ section
 {
 	color: #ffa37b;
 }
+.header-user {
+  background-position: 50%;
+  background-size: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 30px;
+  width: 178px
+}
+
+.header-user_wrap {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start
+}
+
+.header-user_arrow {
+  color: white;
+  cursor: pointer;
+  height: 15px;
+  width: 15px
+}
+
+.header-user_menu {
+  background: #fff;
+  display: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+  position: absolute;
+  top: 40px;
+  width: auto
+}
+
+.header-user_menu ul {
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0;
+  margin: 0;
+  margin-block-start:0;padding-inline-start:0}
+
+.header-user_menu ul li {
+  border-radius: 5px;
+  list-style-type: none
+}
+
+.header-user_menu ul li a {
+  border-radius: 5px;
+  color: black;
+  display: block;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 15px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
+.compte li
+{
+  margin-right: 0 !important;
+}
+.header-user_menu ul li a:hover {
+  background: #f1f5f9;
+  color: #475569
+}
 .book_button
 {
 	width: 152px;
-	height: 54px;
-	background: #ffa37b;
 	margin-left: 45px;
 	text-align: center;
 	-webkit-transition: all 200ms ease;
@@ -641,7 +707,7 @@ section
 }
 .booking_input_a
 {
-	
+
 }
 .booking_input_b
 {
@@ -651,9 +717,9 @@ section
 	-o-appearance: none;
 	appearance: none;
 }
-input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
-{ 
+{
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -677,9 +743,9 @@ input[type=number]::-webkit-outer-spin-button
 	font-size: 14px !important;
 	font-weight: 500 !important;
 	color: #FFFFFF !important;
-} 
+}
 .booking_input:-ms-input-placeholder
-{ 
+{
 	font-size: 14px !important;
 	font-weight: 500 !important;
 	color: #FFFFFF !important;
@@ -719,17 +785,18 @@ input[type=number]::-webkit-outer-spin-button
 }
 .booking_slider_container
 {
-	
+
 }
 .booking_item
 {
 	height: 569px;
+  margin: 20px 0;
 }
 .booking_price
 {
 	position: absolute;
 	top: 15px;
-	left: 15px;
+	right: 15px;
 	width: 128px;
 	height: 36px;
 	background: #ffffff;
@@ -738,6 +805,10 @@ input[type=number]::-webkit-outer-spin-button
 	font-size: 16px;
 	font-weight: 600;
 	color: #393939;
+}
+.wrapper {
+	display: grid;
+	grid-template-columns: 200px 200px 200px;
 }
 .booking_link
 {
@@ -815,7 +886,7 @@ input[type=number]::-webkit-outer-spin-button
 }
 .booking_item_list ul li
 {
-	font-size: 18px;
+	font-size: 17px;
 	font-weight: 600;
 	color: #ffffff;
 }
@@ -1066,9 +1137,9 @@ input[type=number]::-webkit-outer-spin-button
 	font-size: 15px !important;
 	font-weight: 500 !important;
 	color: #6d6d6d !important;
-} 
+}
 .newsletter_input:-ms-input-placeholder
-{ 
+{
 	font-size: 15px !important;
 	font-weight: 500 !important;
 	color: #6d6d6d !important;
@@ -1111,4 +1182,295 @@ input[type=number]::-webkit-outer-spin-button
 	font-size: 15px;
 	font-weight: 500;
 	color: #6d6d6d;
+}
+/*
+=========================
+Fonts
+=========================
+
+font-family: 'Outfit', sans-serif;
+
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+
+/*
+========================
+Variables
+========================
+*/
+
+
+:root {
+
+  font-size: 15px;
+
+  /* Primary */
+  --var-soft-blue: hsl(215, 51%, 70%);
+  --var-cyan: hsl(178, 100%, 50%);
+  /* Neutral */
+  --var-main-darkest: hsl(217, 54%, 11%);
+  --var-card-dark: hsl(216, 50%, 16%);
+  --var-line-dark: hsl(215, 32%, 27%);
+  --var-lightest: white;
+
+  /* Fonts */
+
+  --var-heading: normal normal 600 1.5em/1.6em 'Outfit', sans-serif;
+
+  --var-small-heading: normal normal 400 1em/1em 'Outfit', sans-serif;
+
+  --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
+}
+
+/*
+=======================
+Setup
+=======================
+*/
+
+img {
+  /*width: 100%;*/
+  border-radius: 15px;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+.test1
+{
+  display: flex;
+  justify-content: flex-start;
+}
+.test1 li
+{
+  display: flex;
+  justify-content: center;
+  padding-right: 20px;
+  align-items: center;
+}
+.test1 img
+{
+  margin-right: 10px;
+}
+
+/*
+
+Eye view
+
+https://i.postimg.cc/9MtT4GZY/view.png' border='0' alt='view */
+
+/*
+=========================
+Font Styling
+=========================
+*/
+span {
+  color: white;
+}
+/*
+=====================
+Classes
+=====================
+*/
+
+/* LAYOUT */
+.tout
+{
+  display: grid;
+	grid-template-columns: auto auto;
+	padding: 10px;
+	justify-content: space-evenly;
+}
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-slide {
+  display: none;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+}
+
+/* Style pour l'animation du carrousel */
+.carousel-slide.active {
+  display: block;
+  animation: slide 5s ease-in-out infinite;
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.card-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2em 100px 100px 100px;
+  background-color: var(--var-card-dark);
+  border-radius: 15px;
+  padding: 2rem;
+  bottom: 20px;
+}
+.main-content h1,h2,h3
+{
+  color: white;
+}
+div.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.coin-base, .time-left, .card-attribute {
+  display: flex;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.card-attribute {
+  padding-bottom: 1.5em;
+  border-top: 2px solid var(--var-line-dark);
+}
+
+a.hero-image-container {
+  position: relative;
+  display: block;
+}
+
+
+
+/* Details */
+
+img.eye {
+  position: absolute;
+  width: 100%;
+  max-width: 2em;
+  top: 44%;
+  left: 43%;
+}
+
+@media (min-width:400px) {
+  img.eye {
+    max-width: 3em;
+  }
+}
+
+.hero-image-container::after {
+  content: '';
+  background-image: url("https://i.postimg.cc/9MtT4GZY/view.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 5rem;
+  background-color: hsla(178, 100%, 50%, 0.3);
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.hero-image-container:hover::after {
+  opacity: 1;
+}
+
+.small-image {
+  width: 1.2em;
+  margin-right: .5em;
+}
+.medium-image {
+  width: 2.5em;
+  margin-right: .5em;
+}
+
+.small-avatar {
+  width: 2em;
+  border-radius: 200px;
+  outline: 2px solid white;
+  margin-right: 1.4em;
+}
+
+div.attribution {
+  margin: 0 auto;
+  width: 100%;
+  font: var(--var-para);
+  text-align: center;
+  padding: 1.5em 0 4em 0;
+  color: var(--var-line-dark);
+}
+.attribution a {
+  color: var(--var-soft-blue);
+}
+
+@media (min-width:600px) {
+  body {
+    font-size: 18px;
+  }
+}
+.slider {
+   width: 500px;
+   height: 300px;
+   background-color: yellow;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 0px;
+   text-align: center;
+   overflow: hidden;
+ }
+.image-container {
+  width: 1500px;
+  background-color: pink;
+  height: 300px;
+  clear: both;
+  position: relative;
+  -webkit-transition: left 2s;
+  -moz-transition: left 2s;
+  -o-transition: left 2s;
+  transition: left 2s;
+}
+.slide {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+#slide-1:target ~ .image-container {
+  left: 0px;
+}
+#slide-2:target ~ .image-container {
+  left: -500px;
+}
+#slide-3:target ~ .image-container {
+  left: -1000px;
+}
+.buttons {
+  position: relative;
+  top: -20px;
+}
+.buttons a {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background-color: lightgreen;
 }

@@ -35,58 +35,70 @@ require_once('php/fermeture.php');
 			<div class="ml-auto d-flex flex-row align-items-center justify-content-start">
 				<nav class="main_nav">
 					<ul class="d-flex flex-row align-items-start justify-content-start">
-						<li><a href="index.php">Accueil</a></li>
-						<li><a href="about.php">À propos de nous</a></li>
-						<li><a href="booking.php">Chambres</a></li>
-						<li><a href="contact.php">Contact</a></li>
+            <li><a href="index.php">Accueil</a></li>
+            <li><a href="about.php">À propos de nous</a></li>
+            <li class="active"><a href="booking.php">Chambres</a></li>
+            <li><a href="contact.php">Contact</a></li>
             <?php
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+              echo '<div class="book_button"  onclick="afficher()">
+          <div class="header-user_wrap">
+            <div class="header-user" style="background-image: url(photo/01.jpg);" ></div>
+            <svg class="header-user_arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+              <path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: currentColor;"></path>
+            </svg>
+          </div>
+          <div class="header-user_menu" id="test">
+            <ul class="compte">
+              <li><a href="mesreservation.php">Mes réservations</a></li>
+              <li><a href="" id="logOut">Deconnexion</a></li>
+              </ul>
+          </div>
+        </div>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
             }
             ?>
-					</ul>
-				</nav>
-				<div class="book_button"><a href="php/reservation.php">Réservation en ligne</a></div>
+          </ul>
+        </nav>
 
-				<!-- Hamburger Menu -->
-				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-			</div>
-		</div>
-	</header>
 
-	<!-- Menu -->
+        <!-- Hamburger Menu -->
+        <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+      </div>
+    </div>
+  </header>
 
-	<div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
-		<div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-		<div class="menu_content">
-			<nav class="menu_nav text-right">
-				<ul>
+  <!-- Menu -->
+
+  <div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
+    <div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+    <div class="menu_content">
+      <nav class="menu_nav text-right">
+        <ul>
           <li><a href="index.php">Accueil</a></li>
           <li><a href="about.php">À propos de nous</a></li>
           <li><a href="booking.php">Chambres</a></li>
           <li><a href="contact.php">Contact</a></li>
           <?php
-            // Vérifie si l'utilisateur est connecté
-            if (isset($_SESSION['login'])) {
-              // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
-            } else {
-              // Affiche le bouton de connexion
-              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
-            }
-            ?>
-				</ul>
-			</nav>
-		</div>
-		<div class="menu_extra">
-			<div class="menu_book text-right"><a href="php/reservation.php">Réservation en ligne</a></div>
-		</div>
-	</div>
+          // Vérifie si l'utilisateur est connecté
+          if (isset($_SESSION['login'])) {
+            echo '<li><a href="mesreservation.php">Mes réservations</a></li>';
+            // Affiche le bouton de déconnexion
+            echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+          } else {
+            // Affiche le bouton de connexion
+            echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+          }
+          ?>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
 
 	<!-- Home -->
 
@@ -136,7 +148,7 @@ require_once('php/fermeture.php');
 										</ul>
 									</div>
 								</div>
-								<div class="booking_price">120€/nuit</div>
+								<div class="booking_price">80€/nuit</div>
 								<div class="booking_link"><a href="#famille">Chambre de familliale</a></div>
 							</div>
 
@@ -180,8 +192,8 @@ require_once('php/fermeture.php');
 										</ul>
 									</div>
 								</div>
-								<div class="booking_price">120€/nuit</div>
-								<div class="booking_link"><a href="#simple">Chambre double</a></div>
+								<div class="booking_price">60€/nuit</div>
+								<div class="booking_link"><a href="#double">Chambre double</a></div>
 							</div>
 
 						</div>
@@ -252,12 +264,10 @@ require_once('php/fermeture.php');
 								<li>Étages supérieurs accessibles par ascenseur</li>
 							</ul>
 						</div>
-            <?php
-
-            ?>
             <form method="post" action="connexion.php">
-              <input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['nohotel'])){echo $_REQUEST['nohotel'];} ?>"/>
-              <button class="book_now_button" type="submit"> Reserver maintenant</button>
+                <input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['nohotel'])){echo $_REQUEST['nohotel'];} else {$_SESSION['erreur']="Merci de choisir un hotel avant";} ?>"/>
+
+              <button class="book_now_button" name="txtsend" type="submit"> Reserver maintenant</button>
             </form>
 					</div>
 				</div>
@@ -320,7 +330,14 @@ require_once('php/fermeture.php');
 								<li>Étages supérieurs accessibles par ascenseur</li>
 							</ul>
 						</div>
-						<div class="book_now_button"><a href="reservation_form.php">Réservez maintenant</a></div>
+            <form method="post" action="connexion.php">
+                <?php if(isset($_REQUEST['txtsend']))
+                    {
+                        ?><input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['nohotel'])){echo $_REQUEST['nohotel'];} ?>"/><?php
+                    } ?>
+
+              <button class="book_now_button" name="txtsend" type="submit"> Reserver maintenant</button>
+            </form>
 					</div>
 				</div>
 
@@ -394,7 +411,10 @@ require_once('php/fermeture.php');
 								<li>Étages supérieurs accessibles par ascenseur</li>
 							</ul>
 						</div>
-						<div class="book_now_button"><a href="reservation_form.php">Réserver maintenant</a></div>
+            <form method="post" action="connexion.php">
+              <input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['nohotel'])){echo $_REQUEST['nohotel'];} ?>"/>
+              <button class="book_now_button" name="txtsend" type="submit"> Reserver maintenant</button>
+            </form>
 					</div>
 				</div>
 			</div>

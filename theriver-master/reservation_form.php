@@ -2,18 +2,25 @@
 session_start();
 require_once('php/ouverture.php');
 require_once('php/fermeture.php');
-
+$txtnohotel = $_SESSION['nohotel'];
 if(!isset($_SESSION['login']))
 {
   header("Location: connexion.php");
   exit();
 }
-$txtnohotel = $_SESSION['nohotel'];
-$cnn = connexionBDD();
-$requete="select distinct nochambre from chambre order by nochambre";
-$mesdonnees=$cnn->prepare($requete);
-$mesdonnees->execute();
-$leslignes = $mesdonnees->fetchall();
+if($_SESSION['nohotel'] != "")
+{
+
+  $cnn = connexionBDD();
+  $requete = "select nochambre from chambre where nohotel= '$txtnohotel' order by nochambre";
+  $mesdonnees = $cnn->prepare($requete);
+  $mesdonnees->execute();
+  $leslignes = $mesdonnees->fetchall();
+}
+else
+{
+  header('Location: index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -33,7 +40,8 @@ $leslignes = $mesdonnees->fetchall();
   <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
   <link rel="stylesheet" type="text/css" href="styles/responsive.css">
   <script>var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;</script>
-  <script src="js/main.js"></script>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
 
@@ -47,15 +55,28 @@ $leslignes = $mesdonnees->fetchall();
       <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
         <nav class="main_nav">
           <ul class="d-flex flex-row align-items-start justify-content-start">
-            <li class="active"><a href="index.php">Accueil</a></li>
-            <li><a href="about.php">À propos de nous</a></li>
-            <li><a href="booking.php">Chambres</a></li>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="index.php">Accueil</a></li>
+						<li><a href="about.php">À propos de nous</a></li>
+						<li><a href="booking.php">Chambres</a></li>
+						<li><a href="contact.php">Contact</a></li>
             <?php
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+              echo '<div class="book_button"  onclick="afficher()">
+          <div class="header-user_wrap">
+            <div class="header-user" style="background-image: url(photo/01.jpg);" ></div>
+            <svg class="header-user_arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+              <path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: currentColor;"></path>
+            </svg>
+          </div>
+          <div class="header-user_menu" id="test">
+            <ul class="compte">
+              <li><a href="mesreservation.php">Mes réservations</a></li>
+              <li><a href="" id="logOut">Deconnexion</a></li>
+              </ul>
+          </div>
+        </div>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
@@ -63,47 +84,44 @@ $leslignes = $mesdonnees->fetchall();
             ?>
           </ul>
         </nav>
-        <div class="book_button"><a href="booking.php">Réservation en ligne</a></div>
+				<!-- Hamburger Menu -->
+				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+			</div>
+		</div>
+	</header>
 
-        <!-- Hamburger Menu -->
-        <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-      </div>
-    </div>
-  </header>
+	<!-- Menu -->
 
-  <!-- Menu -->
-
-  <div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
-    <div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-    <div class="menu_content">
-      <nav class="menu_nav text-right">
-        <ul>
-          <li><a href="index.php">Accueil</a></li>
-          <li><a href="about.php">À propos de nous</a></li>
-          <li><a href="booking.php">Chambres</a></li>
-          <li><a href="contact.php">Contact</a></li>
-          <?php
-          // Vérifie si l'utilisateur est connecté
-          if (isset($_SESSION['login'])) {
-            // Affiche le bouton de déconnexion
-            echo '<li><a href="" id="logOut">Déconnexion</a></li>';
-          } else {
-            // Affiche le bouton de connexion
-            echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
-          }
-          ?>
-        </ul>
-      </nav>
-    </div>
-    <div class="menu_extra">
-      <div class="menu_book text-right"><a href="#">Réservation en ligne</a></div>
-    </div>
-  </div>
+	<div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
+		<div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+		<div class="menu_content">
+			<nav class="menu_nav text-right">
+				<ul>
+					<li><a href="index.php">Accueil</a></li>
+					<li><a href="about.php">À propos de nous</a></li>
+					<li><a href="booking.php">Chambres</a></li>
+					<li><a href="contact.php">Contact</a></li>
+					<?php
+            // Vérifie si l'utilisateur est connecté
+            if (isset($_SESSION['login'])) {
+              echo '<li><a href="mesreservation.php">Mes réservations</a></li>';
+              // Affiche le bouton de déconnexion
+              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+            } else {
+              // Affiche le bouton de connexion
+              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+            }
+            ?>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
   <!-- Home -->
 
   <div class="home">
     <div class="background_image" style="background-image:url(images/booking.jpg)"></div>
-    <div class="home_container">
+    <div class="home_container" style="top: 20%">
       <div class="container">
         <div class="row">
           <div class="col">
@@ -111,23 +129,42 @@ $leslignes = $mesdonnees->fetchall();
               <div class="home_title">Réserver une chambre</div>
               <div class="booking_form_container">
                 <form action="php/reservation.php" class="booking_form" id="booking_form" method="post">
-                  <div class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
+                  <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
                     <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
-                      <div><input type="text" class="datepicker booking_input booking_input_a booking_in" placeholder="Arriver" name="dateD" required="required"></div>
-                      <div><input type="text" class="datepicker booking_input booking_input_a booking_out" placeholder="Départ" name="dateF" required="required"></div>
-                      <div><select name="lstchambre[]" multiple class="booking_input booking_input_b" placeholder="Chambre" required="required">
-                          <?php
-                          foreach ($leslignes as $uneligne) {
-                              echo "<option value=" . $uneligne['nochambre'] . ">" . $uneligne['nochambre'] . "</option>";
-                          }
-                          ?>
-                        </select></div>
-<!--                      <div><input type="number" class="booking_input booking_input_b" placeholder="Chambre" required="required"></div>-->
-                      <input type="hidden" name="txtnohotel" value="<?php if($txtnohotel){echo $txtnohotel;} unset($_SESSION['txtnohotel'])?>"/>
+                      <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
+                      <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
+                        <link rel="stylesheet" href="styles/multi-select.css">
+                        <div id="multi-select">
+                            <input type='hidden' id='inputSelectedItems' name="listchambres">
+                            <label for="items-selected" style="display: none; color: white;">Chambre(s) selectionné(s)</label>
+                            <div id="items-selected" data-items-selected></div>
+                            <b><label for="items-available" style="display: none; color: white;">Chambre(s) disponible(s)</label></b>
+                            <div id="items-available" data-items-available></div>
+                        </div>
+                        <div>
+                        <script src="js/multi-select.js"></script>
+                        <script>
+                            <!-- button settings -->
+                            titleAvailable = "Ajouter la chambre";
+                            titleSelected = "Retirer la chambre";
+                            innerHTMLLeftAvailable = "";
+                            innerHTMLLeftSelected = "";
+                            innerHTMLRightAvailable = "";
+                            innerHTMLRightSelected = "";
+                            idItem = "item";
+
+                            listItemsUpdateStr = [<?php echo json_encode(implode(',', array_column($leslignes, 'nochambre'))) ?>];
+                            listAllItemsStr = [<?php echo json_encode(implode(',', array_column($leslignes, 'nochambre'))) ?>];
+
+                            // init
+                            UpdateItems(listItemsUpdateStr, listAllItemsStr);
+                        </script>
+                        </div>
+                      <input type="hidden" name="txtnohotel" value="<?php if($txtnohotel!=""){echo $txtnohotel;} unset($_SESSION['txtnohotel'])?>" readonly/>
                       <input type="hidden" name="txtdateD" value="<?php if(isset($_REQUEST['txtdateD'])){echo $_REQUEST['txtdateD'];} ?>"/>
                       <input type="hidden" name="txtdateF" value="<?php if(isset($_REQUEST['txtdateF'])){echo $_REQUEST['txtdateF'];} ?>"/>
                     </div>
-                    <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
+                        <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
                   </div>
                 </form>
               </div>
@@ -203,6 +240,7 @@ $leslignes = $mesdonnees->fetchall();
     Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
   </div>
 </footer>
+<script src="js/main.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>

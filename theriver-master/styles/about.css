@@ -121,7 +121,7 @@ p a:hover::after
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 48px;}
 h2{font-size: 36px;}
@@ -138,14 +138,14 @@ h1, h2, h3, h4, h5, h6
 	color: #393939;
 	font-weight: 600;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 img
 {
@@ -373,11 +373,74 @@ section
 {
 	color: #ffa37b;
 }
+.header-user {
+  background-position: 50%;
+  background-size: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 30px;
+  width: 178px
+}
+
+.header-user_wrap {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start
+}
+
+.header-user_arrow {
+  color: white;
+  cursor: pointer;
+  height: 15px;
+  width: 15px
+}
+
+.header-user_menu {
+  background: #fff;
+  display: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+  position: absolute;
+  top: 40px;
+  width: auto
+}
+
+.header-user_menu ul {
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0;
+  margin: 0;
+  margin-block-start:0;padding-inline-start:0}
+
+.header-user_menu ul li {
+  border-radius: 5px;
+  list-style-type: none
+}
+
+.header-user_menu ul li a {
+  border-radius: 5px;
+  color: black;
+  display: block;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 15px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
+
+.header-user_menu ul li a:hover {
+  background: #f1f5f9;
+  color: #475569
+}
+.compte li
+{
+  margin-right: 0 !important;
+}
 .book_button
 {
 	width: 152px;
-	height: 54px;
-	background: #ffa37b;
 	margin-left: 45px;
 	text-align: center;
 	-webkit-transition: all 200ms ease;
@@ -642,7 +705,7 @@ section
 }
 .booking_input_a
 {
-	
+
 }
 .booking_input_b
 {
@@ -652,9 +715,9 @@ section
 	-o-appearance: none;
 	appearance: none;
 }
-input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
-{ 
+{
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -678,9 +741,9 @@ input[type=number]::-webkit-outer-spin-button
 	font-size: 14px !important;
 	font-weight: 500 !important;
 	color: #FFFFFF !important;
-} 
+}
 .booking_input:-ms-input-placeholder
-{ 
+{
 	font-size: 14px !important;
 	font-weight: 500 !important;
 	color: #FFFFFF !important;
@@ -1065,9 +1128,9 @@ input[type=number]::-webkit-outer-spin-button
 	font-size: 15px !important;
 	font-weight: 500 !important;
 	color: #6d6d6d !important;
-} 
+}
 .newsletter_input:-ms-input-placeholder
-{ 
+{
 	font-size: 15px !important;
 	font-weight: 500 !important;
 	color: #6d6d6d !important;

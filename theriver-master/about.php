@@ -35,58 +35,70 @@ require_once('php/fermeture.php');
 			<div class="ml-auto d-flex flex-row align-items-center justify-content-start">
 				<nav class="main_nav">
 					<ul class="d-flex flex-row align-items-start justify-content-start">
-						<li class="active"><a href="index.php">Accueil</a></li>
-						<li><a href="about.php">À propos de nous</a></li>
-						<li><a href="booking.php">Chambres</a></li>
-						<li><a href="contact.php">Contact</a></li>
-						<?php
+            <li><a href="index.php">Accueil</a></li>
+            <li class="active"><a href="about.php">À propos de nous</a></li>
+            <li><a href="booking.php">Chambres</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <?php
             // Vérifie si l'utilisateur est connecté
             if (isset($_SESSION['login'])) {
               // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+              echo '<div class="book_button"  onclick="afficher()">
+          <div class="header-user_wrap">
+            <div class="header-user" style="background-image: url(photo/01.jpg);" ></div>
+            <svg class="header-user_arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+              <path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: currentColor;"></path>
+            </svg>
+          </div>
+          <div class="header-user_menu" id="test">
+            <ul class="compte">
+              <li><a href="mesreservation.php">Mes réservations</a></li>
+              <li><a href="" id="logOut">Deconnexion</a></li>
+              </ul>
+          </div>
+        </div>';
             } else {
               // Affiche le bouton de connexion
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
             }
             ?>
-					</ul>
-				</nav>
-				<div class="book_button"><a href="reservation.php">Réservation en ligne</a></div>
+          </ul>
+        </nav>
 
-				<!-- Hamburger Menu -->
-				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-			</div>
-		</div>
-	</header>
 
-	<!-- Menu -->
+        <!-- Hamburger Menu -->
+        <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+      </div>
+    </div>
+  </header>
 
-	<div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
-		<div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-		<div class="menu_content">
-			<nav class="menu_nav text-right">
-				<ul>
-					<li><a href="index.php">Accueil</a></li>
-					<li><a href="about.php">À propos de nous</a></li>
-					<li><a href="booking.php">Chambres</a></li>
-					<li><a href="contact.php">Contact</a></li>
-					<?php
-            // Vérifie si l'utilisateur est connecté
-            if (isset($_SESSION['login'])) {
-              // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
-            } else {
-              // Affiche le bouton de connexion
-              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
-            }
-            ?>
-				</ul>
-			</nav>
-		</div>
-		<div class="menu_extra">
-			<div class="menu_book text-right"><a href="reservation.php">Réservation en ligne</a></div>
-		</div>
-	</div>
+  <!-- Menu -->
+
+  <div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
+    <div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+    <div class="menu_content">
+      <nav class="menu_nav text-right">
+        <ul>
+          <li><a href="index.php">Accueil</a></li>
+          <li><a href="about.php">À propos de nous</a></li>
+          <li><a href="booking.php">Chambres</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <?php
+          // Vérifie si l'utilisateur est connecté
+          if (isset($_SESSION['login'])) {
+            echo '<li><a href="mesreservation.php">Mes réservations</a></li>';
+            // Affiche le bouton de déconnexion
+            echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+          } else {
+            // Affiche le bouton de connexion
+            echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+          }
+          ?>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
 
 	<!-- Home -->
 
@@ -113,7 +125,7 @@ require_once('php/fermeture.php');
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6">
-					<div class="about_title"><h2>The River / 10 years of excellence</h2></div>
+					<div class="about_title"><h2>Balladins / Des années d'expériences</h2></div>
 				</div>
 			</div>
 			<div class="row about_row">
@@ -122,7 +134,7 @@ require_once('php/fermeture.php');
 				<div class="col-lg-6">
 					<div class="about_content">
 						<div class="about_text">
-							<p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci ipsum, a bibendum lacus suscipit sit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci ipsum, a bibendum lacus suscipit sit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit.</p>
+              <p>Riche d'une forte notoriété dans le paysage hôtelier français, l'enseigne balladins et ses nuances se positionnent principalement sur des établissements classés 2 et 3 étoiles. <br><br>Le réseau balladins, avec plus de 35 ans d'expérience au service de ses clients, a su capitaliser sur son expertise d'une chaîne hôtelière à taille humaine. balladins est aujourd'hui une enseigne incontournable du marché de l'hôtellerie économique en France et a été élue "3ème meilleure chaïne d'Hôtellerie française" selon une étude réalisée par l’Institut STATISTA parue dans le numéro de Novembre 2016 du magazine Capital.</p>
 						</div>
 						<div class="about_sig"><img src="images/sig.png" alt=""></div>
 					</div>
@@ -154,9 +166,9 @@ require_once('php/fermeture.php');
 
 				<div class="col-xl-6 order-xl-2 order-1">
 					<div class="split_section_right_content">
-						<div class="split_section_title"><h1>Luxury Resort</h1></div>
+						<div class="split_section_title"><h1>Complexe de luxe</h1></div>
 						<div class="split_section_text">
-							<p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci ipsum, a bibendum lacus suscipit sit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci ipsum, a bibendum lacus suscipit sit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci.</p>
+              <p>Niché au cœur d'un paysage enchanteur, le complexe de luxe des Balladins incarne l'élégance et le raffinement dans un cadre naturel exceptionnel. Entouré par des jardins luxuriants et des vues panoramiques, cet établissement prestigieux offre une escapade exquise pour ceux en quête d'une expérience inoubliable. Dès l'arrivée, les hôtes sont accueillis par un service attentionné et personnalisé. Les jardins parfaitement entretenus invitent à la détente, offrant des sentiers sinueux et des recoins paisibles pour se relaxer. Le bâtiment principal, une merveille architecturale, mêle habilement le charme traditionnel à des touches contemporaines. Les chambres et suites somptueusement décorées sont des havres de confort, dotées d'équipements modernes et offrant des vues imprenables sur les environs. Chaque détail a été soigneusement pensé pour assurer un séjour d'exception, alliant luxe et sérénité.</p>
 						</div>
 
 						<!-- Milestones -->
@@ -201,9 +213,9 @@ require_once('php/fermeture.php');
 			<div class="row">
 				<div class="col-xl-6">
 					<div class="split_section_left_content">
-						<div class="split_section_title"><h1>Wedding venue</h1></div>
+						<div class="split_section_title"><h1>Salle de mariage</h1></div>
 						<div class="split_section_text">
-							<p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci ipsum, a bibendum lacus suscipit sit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci ipsum, a bibendum lacus suscipit sit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse nec faucibus velit. Quisque eleifend orci.</p>
+							<p>La salle de mariage au sein du complexe de luxe Balladins incarne l'élégance et le charme, offrant un cadre idyllique pour célébrer l'amour et l'union de deux âmes. Nichée au cœur d'un environnement pittoresque, cette salle de réception marie subtilement le raffinement à une ambiance chaleureuse et accueillante. Spacieuse et lumineuse, la salle est aménagée avec un souci du détail exquis. Des éléments décoratifs soigneusement sélectionnés ajoutent une touche de sophistication à l'espace, tandis que la disposition flexible permet d'adapter la configuration selon les préférences des mariés pour ce jour si spécial. Les grandes fenêtres laissent entrer la lumière naturelle, offrant une vue imprenable sur les jardins luxuriants ou les panoramas environnants, créant ainsi une toile de fond magique pour la célébration. Un mariage en plein air peut également être organisé dans les jardins bien entretenus, offrant une ambiance romantique et intime.</p>
 						</div>
 
 						<!-- Loaders -->
@@ -265,37 +277,37 @@ require_once('php/fermeture.php');
 						<div class="owl-carousel owl-theme test_slider">
 
 							<!-- Slide -->
-							<div  class="test_slider_item text-center">
-								<div class="rating rating_5 d-flex flex-row align-items-start justify-content-center"><i></i><i></i><i></i><i></i><i></i></div>
-								<div class="testimonial_title"><a href="#">Perfect Stay</a></div>
-								<div class="testimonial_text">
-									<p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic.</p>
-								</div>
-								<div class="testimonial_image"><img src="images/user_1.jpg" alt=""></div>
-								<div class="testimonial_author"><a href="#">Samantha Smith</a>, Greece</div>
-							</div>
+              <div  class="test_slider_item text-center">
+                <div class="rating rating_5 d-flex flex-row align-items-start justify-content-center"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="testimonial_title"><a href="#">Hotel Genial</a></div>
+                <div class="testimonial_text">
+                  <p>J'y suis déjà venu et j'y vais pour le travail. C'est vraiment un très bon hôtel. L'accueil est toujours très agréable, le personnel est vraiment serviable et sympa. Les chambres sont grandes et confortables Le petit déjeuner est complet. Il a une piscine. Je vous le recommande fortement 73€ la chambre, c'est très correct.</p>
+                </div>
+                <div class="testimonial_image"><img src="images/user_1.jpg" alt=""></div>
+                <div class="testimonial_author"><a href="#">Samantha Smith</a>, Greece</div>
+              </div>
 
-							<!-- Slide -->
-							<div  class="test_slider_item text-center">
-								<div class="rating rating_5 d-flex flex-row align-items-start justify-content-center"><i></i><i></i><i></i><i></i><i></i></div>
-								<div class="testimonial_title"><a href="#">Nice place</a></div>
-								<div class="testimonial_text">
-									<p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic.</p>
-								</div>
-								<div class="testimonial_image"><img src="images/user_2.jpg" alt=""></div>
-								<div class="testimonial_author"><a href="#">Michael Doe</a>, Italy</div>
-							</div>
+              <!-- Slide -->
+              <div  class="test_slider_item text-center">
+                <div class="rating rating_5 d-flex flex-row align-items-start justify-content-center"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="testimonial_title"><a href="#">Super endroit</a></div>
+                <div class="testimonial_text">
+                  <p>Équipe exceptionnelle Arrangeante, toujours dispo. Connaissance top de la région. Bonne cuisine Chambre spatieuse et isolée du bruit. Excellent petit déjeuner. Plats variés et quantité au programme. Longue soirées près de la piscine +++</p>
+                </div>
+                <div class="testimonial_image"><img src="images/user_2.jpg" alt=""></div>
+                <div class="testimonial_author"><a href="#">Michael Doe</a>, Italy</div>
+              </div>
 
-							<!-- Slide -->
-							<div  class="test_slider_item text-center">
-								<div class="rating rating_5 d-flex flex-row align-items-start justify-content-center"><i></i><i></i><i></i><i></i><i></i></div>
-								<div class="testimonial_title"><a href="#">We loved it</a></div>
-								<div class="testimonial_text">
-									<p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic.</p>
-								</div>
-								<div class="testimonial_image"><img src="images/user_3.jpg" alt=""></div>
-								<div class="testimonial_author"><a href="#">Luis Garcia</a>, Spain</div>
-							</div>
+              <!-- Slide -->
+              <div  class="test_slider_item text-center">
+                <div class="rating rating_5 d-flex flex-row align-items-start justify-content-center"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="testimonial_title"><a href="#">On a adoré</a></div>
+                <div class="testimonial_text">
+                  <p>Accueil de bonne qualité. Chambre spacieuse et bien équipée pour la salle de bain. Bon petit-déjeuner. Hôtel bien insonorisé. Vue agréable du côté village. Bon rapport qualité prix. Salles de restauration agreables</p>
+                </div>
+                <div class="testimonial_image"><img src="images/user_3.jpg" alt=""></div>
+                <div class="testimonial_author"><a href="#">Luis Garcia</a>, Spain</div>
+              </div>
 
 						</div>
 					</div>
