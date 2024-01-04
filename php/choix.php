@@ -7,11 +7,11 @@ $login = $_REQUEST['txtusername'];
 $mdp = $_REQUEST['txtpassword'];
 $mail = $_REQUEST['txtmail'];
 $txtnohotel = $_REQUEST['txtnohotel'];
+$login=htmlspecialchars($login,ENT_QUOTES);
+$mail=htmlspecialchars($mail,ENT_QUOTES);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action']=="Création")
 {
-  $login=htmlspecialchars($login,ENT_QUOTES);
-  $mail=htmlspecialchars($mail,ENT_QUOTES);
   $errors = array();
 
   if (empty($login)) {
@@ -29,7 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
   if (empty($errors))
   {
     $cnn = connexionBDD();
-    $reqresult = "SELECT COUNT(*) FROM client WHERE nomClient = ?";
+
+
+    $reqresult = "SELECT COUNT(*) FROM client where nomClient=?";
     $mesdonnees = $cnn->prepare($reqresult);
     $mesdonnees->execute([$login]);
     $count = $mesdonnees->fetchColumn();
@@ -69,52 +71,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
   closeBDD($cnn);
 }
 //Connection d'un compte
-  elseif ($_POST['action'] == 'Connecter')
-  {
-    $cnn=connexionBDD();
-    $reqresult ="SELECT nomClient, mdpClient FROM client where nomClient=?";
+elseif ($_POST['action'] == 'Connecter')
+{
+  $cnn=connexionBDD();
+  $reqresult ="SELECT nomClient, mdpClient FROM client where nomClient=?";
 
-    $mesdonnees=$cnn->prepare($reqresult);
-    $mesdonnees->bindParam(1,$login, PDO::PARAM_STR);
-    try
+  $mesdonnees=$cnn->prepare($reqresult);
+  $mesdonnees->bindParam(1,$login, PDO::PARAM_STR);
+  try
+  {
+    $mesdonnees->execute();
+  }
+  catch(PDOException $e)
+  {
+    die('<span>Erreur : </span>' . $e->getMessage());
+  }
+  $result = $mesdonnees->fetch();
+  if($result)
+  {
+    $motDePasseHache = $result['mdpClient'];
+    //Vérification du mot de passe chiffré
+    if (password_verify($mdp, $motDePasseHache))
     {
-      $mesdonnees->execute();
+      // L'utilisateur est connecté
+      $_SESSION['login'] = $login;
+      $cost = 12;
+      $_SESSION['token'] = password_hash(time() * rand(50, 250), PASSWORD_BCRYPT, ['cost' => $cost]);
+      $_SESSION['nohotel'] = $txtnohotel;
+      echo "Connexion réussie!";
+      header("Location: ../reservation_form.php");
     }
-    catch(PDOException $e)
+    else
     {
-      die('<span>Erreur : </span>' . $e->getMessage());
-    }
-    $result = $mesdonnees->fetch();
-    if($result)
-    {
-      $motDePasseHache = $result['mdpClient'];
-      //Vérification du mot de passe chiffré
-      if (password_verify($mdp, $motDePasseHache))
-      {
-        // L'utilisateur est connecté
-        $_SESSION['login'] = $login;
-        $cost = 12;
-        $_SESSION['token'] = password_hash(time() * rand(50, 250), PASSWORD_BCRYPT, ['cost' => $cost]);
-        $_SESSION['nohotel'] = $txtnohotel;
-        echo "Connexion réussie!";
-        header("Location: ../reservation_form.php");
-      }
-      else
-      {
-        // Échec de la connexion
-        $_SESSION['erreur1']="Nom d'utilisateur ou mot de passe incorrect.";
-        header("Location: ../connexion.php");
-        exit();
-      }
-    }
-    else {
       // Échec de la connexion
       $_SESSION['erreur1']="Nom d'utilisateur ou mot de passe incorrect.";
       header("Location: ../connexion.php");
       exit();
     }
-
-    // Fermeture du statement et de la connexion
-    $mesdonnees = null;
-    closeBDD($mesdonnees);
   }
+  else {
+    // Échec de la connexion
+    $_SESSION['erreur1']="Nom d'utilisateur ou mot de passe incorrect.";
+    header("Location: ../connexion.php");
+    exit();
+  }
+
+  // Fermeture du statement et de la connexion
+  $mesdonnees = null;
+  closeBDD($mesdonnees);
+}

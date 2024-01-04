@@ -5,13 +5,13 @@ require_once('php/ouverture.php');
 require_once('php/fermeture.php');
 if(!isset($_SESSION['login']))
 {
-    header("Location: index.php");
+  header("Location: index.php");
 }
 //Requête SQL pour voir les réservations attitré à la personne
 $client = $_SESSION['login'];
 $client = htmlspecialchars($client, ENT_QUOTES);
 $cnn = connexionBDD();
-$requete = "select * from reservation inner join hotel on hotel.nohotel = reservation.nohotel inner join client on reservation.noClient=client.noClient where client.nomClient=?";
+$requete = "select * from reservation inner join hotel on hotel.nohotel = reservation.nohotel inner join client on reservation.noClient=client.noClient where client.nomClient=? order by reservation.datedeb";
 $mesdonnees = $cnn->prepare($requete);
 $mesdonnees->bindParam(1,$client,PDO::PARAM_STR);
 $mesdonnees->execute();
@@ -21,17 +21,17 @@ $i = 1;
 //Requête SQL pour supprimer la réservation
 if(isset($_REQUEST["btnAnnuler"]))
 {
-    $txtnores = $_REQUEST['txtnores'];
-    $txtnores = htmlspecialchars($txtnores, ENT_QUOTES);
-    $requete = "delete from reserv where nores=?";
-    $mesdonnees = $cnn->prepare($requete);
-    $mesdonnees->bindParam(1,$txtnores,PDO::PARAM_INT);
-    $mesdonnees->execute();
-    $requete = "delete from reservation where nores=?";
-    $mesdonnees = $cnn->prepare($requete);
-    $mesdonnees->bindParam(1,$txtnores,PDO::PARAM_INT);
-    $mesdonnees->execute();
-    header("Location: mesreservation.php");
+  $txtnores = $_REQUEST['txtnores'];
+  $txtnores = htmlspecialchars($txtnores, ENT_QUOTES);
+  $requete = "delete from reserv where nores=?";
+  $mesdonnees = $cnn->prepare($requete);
+  $mesdonnees->bindParam(1,$txtnores,PDO::PARAM_INT);
+  $mesdonnees->execute();
+  $requete = "delete from reservation where nores=?";
+  $mesdonnees = $cnn->prepare($requete);
+  $mesdonnees->bindParam(1,$txtnores,PDO::PARAM_INT);
+  $mesdonnees->execute();
+  header("Location: mesreservation.php");
 }
 ?>
 
@@ -59,14 +59,14 @@ if(isset($_REQUEST["btnAnnuler"]))
 <body>
 <div class="super_container">
 
-    <!-- Header -->
+  <!-- Header -->
 
-    <header class="header">
-      <div class="header_content d-flex flex-row align-items-center justify-content-start">
-        <div class="logo"><a href="index.php">Balladins</a></div>
-        <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
-          <nav class="main_nav">
-            <ul class="d-flex flex-row align-items-start justify-content-start">
+  <header class="header">
+    <div class="header_content d-flex flex-row align-items-center justify-content-start">
+      <div class="logo"><a href="index.php">Balladins</a></div>
+      <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
+        <nav class="main_nav">
+          <ul class="d-flex flex-row align-items-start justify-content-start">
             <li class="active"><a href="index.php">Accueil</a></li>
             <li><a href="about.php">À propos de nous</a></li>
             <li><a href="booking.php">Chambres</a></li>
@@ -97,147 +97,151 @@ if(isset($_REQUEST["btnAnnuler"]))
               echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
             }
             ?>
-            </ul>
-          </nav>
-
-
-          <!-- Hamburger Menu -->
-          <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-        </div>
-    </header>
-
-    <!-- Menu -->
-
-    <div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
-      <div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-      <div class="menu_content">
-        <nav class="menu_nav text-right">
-          <ul>
-            <li><a href="index.php">Accueil</a></li>
-            <li><a href="about.php">À propos de nous</a></li>
-            <li><a href="booking.php">Chambres</a></li>
-            <li><a href="contact.php">Contact</a></li>
-            <?php
-            // Vérifie si l'utilisateur est connecté
-            if (isset($_SESSION['login']))
-            {
-              echo '<li><a href="mesreservation.php">Mes Réservations</a></li>';
-              // Affiche le bouton de déconnexion
-              echo '<li><a href="" id="logOut">Déconnexion</a></li>';
-            }
-            else
-            {
-              // Affiche le bouton de connexion
-              echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
-            }
-            ?>
           </ul>
         </nav>
+
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
       </div>
+  </header>
+
+  <!-- Menu -->
+
+  <div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
+    <div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+    <div class="menu_content">
+      <nav class="menu_nav text-right">
+        <ul>
+          <li><a href="index.php">Accueil</a></li>
+          <li><a href="about.php">À propos de nous</a></li>
+          <li><a href="booking.php">Chambres</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <?php
+          // Vérifie si l'utilisateur est connecté
+          if (isset($_SESSION['login']))
+          {
+            echo '<li><a href="mesreservation.php">Mes Réservations</a></li>';
+            // Affiche le bouton de déconnexion
+            echo '<li><a href="" id="logOut">Déconnexion</a></li>';
+          }
+          else
+          {
+            // Affiche le bouton de connexion
+            echo '<li><a href="connexion.php" id="logIn">Connexion</a></li>';
+          }
+          ?>
+        </ul>
+      </nav>
     </div>
   </div>
-    <!-- Home -->
+</div>
+<!-- Home -->
 
-    <div class="home">
-      <div class="background_image" style="background-image:url(images/booking.jpg)"></div>
-      <div class="home_container">
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <div class="home_content text-center">
-                  <!-- Vérifie s'il y une/des réservation(s) -->
-                <?php
-                if ($leslignes!=null)
-                {?>
-                    <div class="home_title">Mes réservations</div>
+<div class="home">
+  <div class="background_image" style="background-image:url(images/booking.jpg)"></div>
+  <div class="home_container">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="home_content text-center">
+            <!-- Vérifie s'il y une/des réservation(s) -->
+            <?php
+            if ($leslignes!=null)
+            {?>
+              <div class="home_title">Mes réservations</div>
 
-                    <?php if(isset($_REQUEST['btnAnnuler']))
-                    {
-                        echo "<h1 color='white'>La commande a été supprimer</h1>";
-                    }
-                }
-                else
-                {?>
-                    <div class="home_title">Il n'y a pas de réservation</div>
-                <?php
-                }?>
-              </div>
-            </div>
+              <?php if(isset($_REQUEST['btnAnnuler']))
+            {
+              echo "<h1 color='white'>La commande a été supprimer</h1>";
+            }
+            }
+            else
+            {?>
+              <div class="home_title">Il n'y a pas de réservation</div>
+              <?php
+            }?>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
 <!-- Affichage des données sous forme de "card" pour chaque réservation attitré à la personne -->
-  <div class="tout" style="justify-content: center" >
+<div class="tout" style="justify-content: center" >
   <?php
-      if (isset($leslignes))
-      {
-        foreach ($leslignes as $uneligne)
-        {
-            ?>
-        <div class="card-container">
-          <section id="first-slider-<?php echo $i ?>" class="splide">
-            <div class="splide__track">
-              <ul class="splide__list">
-                <?php
-                $requete1 = "select * from photo where nohotel='$uneligne[nohotel]'";
-                $mesdonnees1=$cnn->prepare($requete1);
-                $mesdonnees1->execute();
-                $leslignes1 = $mesdonnees1->fetchall();
-                $requete0="select lib, logo from equiper inner join equipement on equiper.noequ=equipement.noequ where nohotel='$uneligne[nohotel]'";
-                $mesdonnees2=$cnn->prepare($requete0);
-                $mesdonnees2->execute();
-                $leslignes2 = $mesdonnees2->fetchall();
-                $requete2="select * from reserv where nores='$uneligne[nores]'";
-                $mesdonnees3=$cnn->prepare($requete2);
-                $mesdonnees3->execute();
-                $leslignes3 = $mesdonnees3->fetchall();
+  if (isset($leslignes))
+  {
+    foreach ($leslignes as $uneligne)
+    {
+      $dateDeb = new DateTime($uneligne['datedeb']);
+      $dateFin = new DateTime($uneligne['datefin']);
+      ?>
+      <div class="card-container">
+        <section id="first-slider-<?php echo $i ?>" class="splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <?php
+              $requete1 = "select * from photo where nohotel='$uneligne[nohotel]'";
+              $mesdonnees1=$cnn->prepare($requete1);
+              $mesdonnees1->execute();
+              $leslignes1 = $mesdonnees1->fetchall();
+              $requete0="select lib, logo from equiper inner join equipement on equiper.noequ=equipement.noequ where nohotel='$uneligne[nohotel]'";
+              $mesdonnees2=$cnn->prepare($requete0);
+              $mesdonnees2->execute();
+              $leslignes2 = $mesdonnees2->fetchall();
+              $requete2="select * from reserv where nores='$uneligne[nores]'";
+              $mesdonnees3=$cnn->prepare($requete2);
+              $mesdonnees3->execute();
+              $leslignes3 = $mesdonnees3->fetchall();
 
-                foreach ($leslignes1 as $photo)
-                {?>
-                  <li class="splide__slide"><img style="height: 300px; width: 550px" src=<?php echo "photo/". $photo['nomfichier']?> alt="Image de l'hotel"></li>
-                <?php } ?>
-              </ul>
+              foreach ($leslignes1 as $photo)
+              {?>
+                <li class="splide__slide"><img style="height: 300px; width: 550px" src=<?php echo "photo/". $photo['nomfichier']?> alt="Image de l'hotel"></li>
+              <?php } ?>
+            </ul>
+          </div>
+        </section>
+        <main class="main-content">
+          <h1><?php echo $uneligne['nom'] ?></h1>
+          <h3>Code d'accès: <?php echo intval($uneligne['codeacces'])?></h3>
+          <?php
+          //Reinitialise a chaque fois le string des chambres
+          $chambresString="";
+          foreach ($leslignes3 as $chambre)
+          {
+            $chambresString.=$chambre['nochambre'].",";
+          }
+          echo "<h3>Chambre(s): ".substr($chambresString, 0, -1)."</h3>";
+          echo "<h3>Date d'arrivé: ".$dateDeb->format('d/m/Y')."</h3>";
+          echo "<h3>Date de départ: ".$dateFin->format('d/m/Y')."</h3>";
+          foreach ($leslignes2 as $unequipement)
+          {?>
+            <div class="flex-row">
+              <div class="coin-base">
+                <img alt="logo de l'équipement" class="medium-image" src=<?php echo "logo/".$unequipement['logo']?> />
+                <h2><?php echo $unequipement['lib']?></h2>
+              </div>
             </div>
-          </section>
-            <main class="main-content">
-              <h1><?php echo $uneligne['nom'] ?></h1>
-              <h3>Code d'accès: <?php echo intval($uneligne['codeacces'])?></h3>
-                <?php
-                //Reinitialise a chaque fois le string des chambres
-                $chambresString="";
-                foreach ($leslignes3 as $chambre)
-                {
-                    $chambresString.=$chambre['nochambre'].",";
-                }
-                echo "<h3>Chambre(s): ".substr($chambresString, 0, -1)."</h3>";
-                foreach ($leslignes2 as $unequipement)
-                {?>
-                  <div class="flex-row">
-                    <div class="coin-base">
-                      <img alt="logo de l'équipement" class="medium-image" src=<?php echo "logo/".$unequipement['logo']?> />
-                      <h2><?php echo $unequipement['lib']?></h2>
-                    </div>
-                  </div>
-                <?php
-                }?>
-                <form method="post">
-                    <br>
-                    <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
-                        <div><input class="booking_button trans_200" type="submit" name="btnAnnuler" value="Annuler la réservation"/></div>
-                        <input type="hidden" name="txtnores" value="<?php echo $uneligne['nores']?>">
-                    </div>
-                </form>
-            </main>
-        </div>
-            <!-- Permet de créer autant de "card" que de réservation -->
-        <?php
-          $i++;
-        }
-      }
+            <?php
+          }?>
+          <form method="post">
+            <br>
+            <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
+              <div><input class="booking_button trans_200" type="submit" name="btnAnnuler" value="Annuler la réservation"/></div>
+              <input type="hidden" name="txtnores" value="<?php echo $uneligne['nores']?>">
+            </div>
+          </form>
+        </main>
+      </div>
+      <!-- Permet de créer autant de "card" que de réservation -->
+      <?php
+      $i++;
+    }
+  }
   ?>
-  </div>
+</div>
 
 <!-- Footer -->
 
@@ -311,13 +315,13 @@ if(isset($_REQUEST["btnAnnuler"]))
 foreach ($leslignes as $uneligne)
 {?>
   <script>
-  var elms = document.getElementsByClassName( 'splide' );
+    var elms = document.getElementsByClassName( 'splide' );
 
-  for ( var i = 0; i < elms.length; i++ ) {
-  new Splide( elms[ i ] ).mount();
-  }
+    for ( var i = 0; i < elms.length; i++ ) {
+      new Splide( elms[ i ] ).mount();
+    }
   </script>
-<?php
+  <?php
 }
 ?>
 <script src="js/main.js"></script>

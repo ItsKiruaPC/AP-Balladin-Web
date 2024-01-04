@@ -26,23 +26,24 @@ else
   header('Location: index.php');
 }
 //Permet de voir les chambres disponibles pour les dates choisi
-if (isset($_REQUEST['btnAccept'])) {
-    $datedeb = $_REQUEST['dateD'];
-    $datefin = $_REQUEST['dateF'];
-    $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varchar,:n1) AND nochambre NOT IN ( SELECT nochambre FROM  reserv INNER JOIN reservation ON reserv.nores=reservation.nores WHERE reservation.nohotel=CONVERT(varchar,:n2) AND(    (datedeb>=CONVERT(varchar,:d1)
+if (isset($_REQUEST['btnAccept']))
+{
+  $datedeb = $_REQUEST['dateD'];
+  $datefin = $_REQUEST['dateF'];
+$req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varchar,:n1) AND nochambre NOT IN ( SELECT nochambre FROM  reserv INNER JOIN reservation ON reserv.nores=reservation.nores WHERE reservation.nohotel=CONVERT(varchar,:n2) AND(    (datedeb>=CONVERT(varchar,:d1)
     AND datedeb<CONVERT(varchar,:d2)) OR (datefin>CONVERT(varchar,:d3) AND datefin<=CONVERT(varchar,:d4)) OR (datedeb<=CONVERT(varchar,:d5)
     AND datefin>=CONVERT(varchar,:d6))))");
-    
-    $req->bindParam(':n1',$txtnohotel, PDO::PARAM_INT);
-    $req->bindParam(':n2',$txtnohotel, PDO::PARAM_INT);
-    $req->bindParam(':d1',$datedeb, PDO::PARAM_STR);
-    $req->bindParam(':d2',$datefin, PDO::PARAM_STR);
-    $req->bindParam(':d3',$datedeb, PDO::PARAM_STR);
-    $req->bindParam(':d4',$datefin, PDO::PARAM_STR);
-    $req->bindParam(':d5',$datedeb, PDO::PARAM_STR);
-    $req->bindParam(':d6',$datefin, PDO::PARAM_STR);
-    $req->execute();
-    $req1 = $req->fetchAll();
+
+  $req->bindParam(':n1',$txtnohotel, PDO::PARAM_INT);
+  $req->bindParam(':n2',$txtnohotel, PDO::PARAM_INT);
+  $req->bindParam(':d1',$datedeb, PDO::PARAM_STR);
+  $req->bindParam(':d2',$datefin, PDO::PARAM_STR);
+  $req->bindParam(':d3',$datedeb, PDO::PARAM_STR);
+  $req->bindParam(':d4',$datefin, PDO::PARAM_STR);
+  $req->bindParam(':d5',$datedeb, PDO::PARAM_STR);
+  $req->bindParam(':d6',$datefin, PDO::PARAM_STR);
+  $req->execute();
+  $req1 = $req->fetchAll();
 
 }
 ?>
@@ -98,113 +99,114 @@ if (isset($_REQUEST['btnAccept'])) {
             </div>
           </ul>
         </nav>
-				<!-- Hamburger Menu -->
-				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-			</div>
-		</div>
-	</header>
+        <!-- Hamburger Menu -->
+        <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+      </div>
+    </div>
+  </header>
 
-	<!-- Menu -->
+  <!-- Menu -->
 
-	<div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
-		<div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-		<div class="menu_content">
-			<nav class="menu_nav text-right">
-				<ul>
-					<li><a href="index.php">Accueil</a></li>
-					<li><a href="about.php">À propos de nous</a></li>
-					<li><a href="booking.php">Chambres</a></li>
-					<li><a href="contact.php">Contact</a></li>
-					<li><a href="mesreservation.php">Mes réservations</a></li>';
-                    <li><a href="" id="logOut">Déconnexion</a></li>';
-				</ul>
-			</nav>
-		</div>
-	</div>
+  <div class="menu trans_400 d-flex flex-column align-items-end justify-content-start">
+    <div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+    <div class="menu_content">
+      <nav class="menu_nav text-right">
+        <ul>
+          <li><a href="index.php">Accueil</a></li>
+          <li><a href="about.php">À propos de nous</a></li>
+          <li><a href="booking.php">Chambres</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><a href="mesreservation.php">Mes réservations</a></li>';
+          <li><a href="" id="logOut">Déconnexion</a></li>';
+        </ul>
+      </nav>
+    </div>
+  </div>
 </div>
-  <!-- Home -->
+<!-- Home -->
 
-  <div class="home">
-    <div class="background_image" style="background-image:url(images/booking.jpg)"></div>
-    <div class="home_container" style="top: 20%">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="home_content text-center">
-              <div class="home_title">Réserver une chambre</div>
-              <div class="booking_form_container">
-                  <form class="booking_form" method="post">
-                  <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
-                    <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
-                        <?php
-                        if (!isset($_REQUEST['btnAccept']))
-                        {
-                        ?>
-                        <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
-                      <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
-                        <?php
-                        }
-                        if (!isset($_REQUEST['btnAccept']))
-                        {
-                        ?>
-                        <button class="booking_button trans_200" type="submit" name="btnAccept">accept</button>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                  </div>
-                  </form>
-                  <?php
-                  if (isset($_REQUEST['btnAccept']))
-                  {
+<div class="home">
+  <div class="background_image" style="background-image:url(images/booking.jpg)"></div>
+  <div class="home_container" style="top: 20%">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="home_content text-center">
+            <div class="home_title">Réserver une chambre</div>
+            <div class="booking_form_container">
+              <form class="booking_form" method="post">
+                <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
+                  <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
+                    <?php
+                    if (!isset($_REQUEST['btnAccept']))
+                    {
                       ?>
-                      <form action="php/reservation.php" class="booking_form2" method="post">
-                      <link rel="stylesheet" href="styles/multi-select.css">
-                        <div id="multi-select">
-                            <input type='hidden' id='inputSelectedItems' name="listchambres">
-                            <label for="items-selected" style="display: none; color: white;">Chambre(s) selectionné(s)</label>
-                            <div id="items-selected" data-items-selected></div>
-                            <b><label for="items-available" style="display: none; color: white;">Chambre(s) disponible(s)</label></b>
-                            <div id="items-available" data-items-available></div>
-                        </div>
-                        <div>
-                            <!-- Partie de Tom sur la séléction des chambres (je n'avais pas d'idée de comment l'afficher autre que par une liste) -->
-                        <script src="js/multi-select.js"></script>
-                        <script>
-                            <!-- button settings -->
-                            titleAvailable = "Ajouter la chambre";
-                            titleSelected = "Retirer la chambre";
-                            innerHTMLLeftAvailable = "";
-                            innerHTMLLeftSelected = "";
-                            innerHTMLRightAvailable = "";
-                            innerHTMLRightSelected = "";
-                            idItem = "item";
 
-                            listItemsUpdateStr = [<?php echo json_encode(implode(',', array_column($req1, 'nochambre'))) ?>];
-                            listAllItemsStr = [<?php echo json_encode(implode(',', array_column($leslignes, 'nochambre'))) ?>];
+                      <div><p style="color:black; font-weight:bold">Date d'arrivé</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
+                      <div><p style="color:black; font-weight:bold">Date de départ</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
+                      <?php
+                    }
+                    if (!isset($_REQUEST['btnAccept']))
+                    {
+                      ?>
+                      <div><button style="margin-top:30px" class="booking_button trans_200" type="submit" name="btnAccept">Valider</button></div>
+                      <?php
+                    }
+                    ?>
+                  </div>
+                </div>
+              </form>
+              <?php
+              if (isset($_REQUEST['btnAccept']))
+              {
+              ?>
+              <form action="php/reservation.php" class="booking_form2" method="post">
+                <link rel="stylesheet" href="styles/multi-select.css">
+                <div id="multi-select">
+                  <input type='hidden' id='inputSelectedItems' name="listchambres">
+                  <label for="items-selected" style="display: none; color: white;">Chambre(s) selectionné(s)</label>
+                  <div id="items-selected" data-items-selected></div>
+                  <b><label for="items-available" style="display: none; color: white;">Chambre(s) disponible(s)</label></b>
+                  <div id="items-available" data-items-available></div>
+                </div>
+                <div>
+                  <!-- Partie de Tom sur la séléction des chambres (je n'avais pas d'idée de comment l'afficher autre que par une liste) -->
+                  <script src="js/multi-select.js"></script>
+                  <script>
+                    <!-- button settings -->
+                    titleAvailable = "Ajouter la chambre";
+                    titleSelected = "Retirer la chambre";
+                    innerHTMLLeftAvailable = "";
+                    innerHTMLLeftSelected = "";
+                    innerHTMLRightAvailable = "";
+                    innerHTMLRightSelected = "";
+                    idItem = "item";
 
-                            // init
-                            UpdateItems(listItemsUpdateStr, listAllItemsStr);
-                        </script>
-                            <!-- Fin de Tom -->
-                        </div>
-                      <input type="hidden" name="txtnohotel" value="<?php if($txtnohotel!=""){echo $txtnohotel;} unset($_SESSION['txtnohotel'])?>" readonly/>
-                      <input type="hidden" name="txtdateD" value="<?php if(isset($_REQUEST['dateD'])){echo $_REQUEST['dateD'];} ?>"/>
-                      <input type="hidden" name="txtdateF" value="<?php if(isset($_REQUEST['dateF'])){echo $_REQUEST['dateF'];} ?>"/>
-                      </div>
-                          <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
-                      </form>
+                    listItemsUpdateStr = [<?php echo json_encode(implode(',', array_column($req1, 'nochambre'))) ?>];
+                    listAllItemsStr = [<?php echo json_encode(implode(',', array_column($leslignes, 'nochambre'))) ?>];
+
+                    // init
+                    UpdateItems(listItemsUpdateStr, listAllItemsStr);
+                  </script>
+                  <!-- Fin de Tom -->
+                </div>
+                <input type="hidden" name="txtnohotel" value="<?php if($txtnohotel!=""){echo $txtnohotel;} unset($_SESSION['txtnohotel'])?>" readonly/>
+                <input type="hidden" name="txtdateD" value="<?php if(isset($_REQUEST['dateD'])){echo $_REQUEST['dateD'];} ?>"/>
+                <input type="hidden" name="txtdateF" value="<?php if(isset($_REQUEST['dateF'])){echo $_REQUEST['dateF'];} ?>"/>
+            </div>
+            <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
+            </form>
             <?php
             }
             ?>
 
-            </div>
-            </div>
-        </div>
-              </div>
           </div>
         </div>
+      </div>
+    </div>
   </div>
+</div>
+</div>
 <!-- Footer -->
 
 <footer class="footer">
