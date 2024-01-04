@@ -4,6 +4,7 @@ session_start();
 if(isset($_SESSION['login']))
 {
   $txtnohotel = $_REQUEST['txtnohotel'];
+  $txtnohotel = htmlspecialchars($txtnohotel, ENT_QUOTES);
   $_SESSION['nohotel'] = $txtnohotel;
   header("Location: reservation_form.php");
 }
@@ -40,10 +41,10 @@ if(isset($_SESSION['login']))
             <h1 class="erreur" style="color: red; font-size: 15px; text-align: center"><?php echo $errorMessage; ?></h1>
         <?php endif;?>
         <label for="username">Utilisateur</label>
-        <input type="text" autocomplete="off" placeholder="Username" id="username" name="txtusername">
+        <input type="text" autocomplete="off" placeholder="Username" id="username" name="txtusername" required pattern="[0-9\.]+" oninvalid="setCustomValidity('Veuillez ne pas utiliser de caractères spéciaux. \nUtiliser seulement de [a-z/A-Z/0-9]')">
 
         <label for="password">Mot de passe</label>
-        <input type="password" autocomplete="off" placeholder="Mot de passe" id="password" name="txtpassword">
+        <input type="password" autocomplete="off" placeholder="Mot de passe" id="password" name="txtpassword" required>
 
         <label for="mail">E-Mail (pas besoin si connexion)</label>
         <input type="email" placeholder="Adresse mail" id="mail" name="txtmail">

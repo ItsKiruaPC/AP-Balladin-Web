@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var logIn = document.getElementById("logIn");
   var logOut = document.getElementById("logOut");
 
+
   if (isConnected) {
     logOut.style.display = "block";
   } else {

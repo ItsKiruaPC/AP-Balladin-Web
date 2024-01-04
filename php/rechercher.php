@@ -29,32 +29,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $prix=$_REQUEST['txtprix'];
     $ville=htmlspecialchars($ville, ENT_QUOTES);
     $prix=htmlspecialchars($prix, ENT_QUOTES);
+    $ville = '%'.$ville.'%';
     $cnn = connexionBDD();
     $requete="select * from hotel";
 
-    if ($ville!="")
+    if (!empty($_REQUEST['txtville']))
     {
-        $requete=$requete . " where ville like '%$ville%'";
+        $requete=$requete . " where ville like ?";
 
         if ($prix!="")
         {
-            $requete=$requete . " and prix<= $prix order by prix desc";
+            $requete=$requete . " and prix < ? order by prix desc";
+            $mesdonnees=$cnn->prepare($requete);
+            $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
+            $mesdonnees->bindParam(2,$prix,PDO::PARAM_INT);
         }
         else
         {
             $requete = $requete . " order by ville";
+            $mesdonnees=$cnn->prepare($requete);
+            $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
         }
     }
-
     else
     {
-        $requete=$requete . " where prix <=$prix order by prix desc";
+        $requete=$requete . " where prix <=? order by prix desc";
+        $mesdonnees=$cnn->prepare($requete);
+        $mesdonnees->bindParam(1,$prix,PDO::PARAM_INT);
     }
-    echo $requete;
-    $mesdonnees=$cnn->prepare($requete);
-
-    $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
-    $mesdonnees->bindParam(3,$prix,PDO::PARAM_STR);
     try
     {
         $mesdonnees->execute();
@@ -215,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                       </ul>
                   </div>
                 </div>
-                </div>
+
               <div class="booking_price"><?php echo intval($uneligne['prix'])?>€/nuit</div>
                       <form method="post" action="../booking.php">
                         <button class="booking_link" type="submit" name="nohotel" value="<?php echo $nohotel ?>"><?php echo $uneligne['nom']?></button>

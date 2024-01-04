@@ -1,6 +1,6 @@
 <?php
 //Fermeture de la BDD
-function closeBDD()
+function closeBDD($cnn)
 {
     $cnn=null;
 }

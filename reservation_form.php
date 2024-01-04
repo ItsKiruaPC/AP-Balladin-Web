@@ -4,6 +4,7 @@ session_start();
 require_once('php/ouverture.php');
 require_once('php/fermeture.php');
 $txtnohotel = $_SESSION['nohotel'];
+$txtnohotel = htmlspecialchars($txtnohotel, ENT_QUOTES);
 if(!isset($_SESSION['login']))
 {
   header("Location: connexion.php");
@@ -14,14 +15,35 @@ if($_SESSION['nohotel'] != "")
 {
 
   $cnn = connexionBDD();
-  $requete = "select nochambre from chambre where nohotel= '$txtnohotel' order by nochambre";
+  $requete = "select nochambre from chambre where nohotel= ? order by nochambre";
   $mesdonnees = $cnn->prepare($requete);
+  $mesdonnees->bindParam(1,$txtnohotel,PDO::PARAM_INT);
   $mesdonnees->execute();
   $leslignes = $mesdonnees->fetchall();
 }
 else
 {
   header('Location: index.php');
+}
+//Permet de voir les chambres disponibles pour les dates choisi
+if (isset($_REQUEST['btnAccept'])) {
+    $datedeb = $_REQUEST['dateD'];
+    $datefin = $_REQUEST['dateF'];
+    $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varchar,:n1) AND nochambre NOT IN ( SELECT nochambre FROM  reserv INNER JOIN reservation ON reserv.nores=reservation.nores WHERE reservation.nohotel=CONVERT(varchar,:n2) AND(    (datedeb>=CONVERT(varchar,:d1)
+    AND datedeb<CONVERT(varchar,:d2)) OR (datefin>CONVERT(varchar,:d3) AND datefin<=CONVERT(varchar,:d4)) OR (datedeb<=CONVERT(varchar,:d5)
+    AND datefin>=CONVERT(varchar,:d6))))");
+    
+    $req->bindParam(':n1',$txtnohotel, PDO::PARAM_INT);
+    $req->bindParam(':n2',$txtnohotel, PDO::PARAM_INT);
+    $req->bindParam(':d1',$datedeb, PDO::PARAM_STR);
+    $req->bindParam(':d2',$datefin, PDO::PARAM_STR);
+    $req->bindParam(':d3',$datedeb, PDO::PARAM_STR);
+    $req->bindParam(':d4',$datefin, PDO::PARAM_STR);
+    $req->bindParam(':d5',$datedeb, PDO::PARAM_STR);
+    $req->bindParam(':d6',$datefin, PDO::PARAM_STR);
+    $req->execute();
+    $req1 = $req->fetchAll();
+
 }
 ?>
 <!-- Ajout du css, de script et de plugins -->
@@ -42,12 +64,10 @@ else
   <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
   <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <script>var isConnected = <?php echo isset($_SESSION['login']) ? 'true' : 'false'; ?>;</script>
-
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-
 <div class="super_container">
 
   <!-- Header -->
@@ -62,7 +82,7 @@ else
             <li><a href="about.php">À propos de nous</a></li>
             <li><a href="booking.php">Chambres</a></li>
             <li><a href="contact.php">Contact</a></li>
-            <div class="book_button"  onclick="afficher()">
+            <div class="book_button" onclick="afficher()">
               <div class="header-user_wrap">
                 <div class="header-user" style="background-image: url(images/user-circle-regular-24.png); height: 30px; width: 35px;" ></div>
                 <svg class="header-user_arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -113,12 +133,33 @@ else
             <div class="home_content text-center">
               <div class="home_title">Réserver une chambre</div>
               <div class="booking_form_container">
-                <form action="php/reservation.php" class="booking_form" id="booking_form" method="post">
+                  <form class="booking_form" method="post">
                   <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
                     <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
-                      <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
+                        <?php
+                        if (!isset($_REQUEST['btnAccept']))
+                        {
+                        ?>
+                        <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
                       <div><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
-                        <link rel="stylesheet" href="styles/multi-select.css">
+                        <?php
+                        }
+                        if (!isset($_REQUEST['btnAccept']))
+                        {
+                        ?>
+                        <button class="booking_button trans_200" type="submit" name="btnAccept">accept</button>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                  </div>
+                  </form>
+                  <?php
+                  if (isset($_REQUEST['btnAccept']))
+                  {
+                      ?>
+                      <form action="php/reservation.php" class="booking_form2" method="post">
+                      <link rel="stylesheet" href="styles/multi-select.css">
                         <div id="multi-select">
                             <input type='hidden' id='inputSelectedItems' name="listchambres">
                             <label for="items-selected" style="display: none; color: white;">Chambre(s) selectionné(s)</label>
@@ -139,7 +180,7 @@ else
                             innerHTMLRightSelected = "";
                             idItem = "item";
 
-                            listItemsUpdateStr = [<?php echo json_encode(implode(',', array_column($leslignes, 'nochambre'))) ?>];
+                            listItemsUpdateStr = [<?php echo json_encode(implode(',', array_column($req1, 'nochambre'))) ?>];
                             listAllItemsStr = [<?php echo json_encode(implode(',', array_column($leslignes, 'nochambre'))) ?>];
 
                             // init
@@ -148,20 +189,22 @@ else
                             <!-- Fin de Tom -->
                         </div>
                       <input type="hidden" name="txtnohotel" value="<?php if($txtnohotel!=""){echo $txtnohotel;} unset($_SESSION['txtnohotel'])?>" readonly/>
-                      <input type="hidden" name="txtdateD" value="<?php if(isset($_REQUEST['txtdateD'])){echo $_REQUEST['txtdateD'];} ?>"/>
-                      <input type="hidden" name="txtdateF" value="<?php if(isset($_REQUEST['txtdateF'])){echo $_REQUEST['txtdateF'];} ?>"/>
-                    </div>
-                        <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
-                  </div>
-                </form>
-              </div>
+                      <input type="hidden" name="txtdateD" value="<?php if(isset($_REQUEST['dateD'])){echo $_REQUEST['dateD'];} ?>"/>
+                      <input type="hidden" name="txtdateF" value="<?php if(isset($_REQUEST['dateF'])){echo $_REQUEST['dateF'];} ?>"/>
+                      </div>
+                          <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
+                      </form>
+            <?php
+            }
+            ?>
+
             </div>
+            </div>
+        </div>
+              </div>
           </div>
         </div>
-      </div>
-    </div>
   </div>
-</div>
 <!-- Footer -->
 
 <footer class="footer">

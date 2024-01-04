@@ -142,7 +142,7 @@ $leslignes = $mesdonnees->fetchall();
 							<div class="booking_form_container">
 								<form method="post" action="php/rechercher.php" class="booking_form" id="booking_form">
 									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
-                                    <div class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
+                                    <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
                                     <div><input class="booking_input booking_input_b" type="text" name="txtville" id="tags" placeholder="Nom de ville"/></div>
                                     <div><input class="booking_input booking_input_b" type="number" autocomplete="off" step="0.01" name="txtprix" placeholder="Prix maximum"/></div>
                                     <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
@@ -357,45 +357,6 @@ $leslignes = $mesdonnees->fetchall();
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Blog -->
-
-	<div class="blog">
-
-		<!-- Blog Slider -->
-		<div class="blog_slider_container">
-			<div class="owl-carousel owl-theme blog_slider">
-
-				<!-- Slide -->
-				<div class="blog_slide">
-					<div class="background_image" style="background-image:url(images/index_blog_1.jpg)"></div>
-					<div class="blog_content">
-						<div class="blog_date">Oct 20, 2023</div>
-						<div class="blog_title">Comment réserver votre séjour</div>
-					</div>
-				</div>
-
-				<!-- Slide -->
-				<div class="blog_slide">
-					<div class="background_image" style="background-image:url(images/index_blog_2.jpg)"></div>
-					<div class="blog_content">
-						<div class="blog_date">Oct 20, 2023</div>
-						<div class="blog_title">10 restaurants en ville</div>
-					</div>
-				</div>
-
-				<!-- Slide -->
-				<div class="blog_slide">
-					<div class="background_image" style="background-image:url(images/index_blog_3.jpg)"></div>
-					<div class="blog_content">
-						<div class="blog_date">Oct 20, 2023</div>
-						<div class="blog_title">Un mariage parfait</div>
-					</div>
-				</div>
-
 			</div>
 		</div>
 	</div>

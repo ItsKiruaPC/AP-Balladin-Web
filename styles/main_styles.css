@@ -626,6 +626,11 @@ section
 	display: block;
 	width: 100%;
 }
+.booking_form2
+{
+	display: flex;
+	justify-content: center;
+}
 .booking_input
 {
 	width: 100%;
@@ -649,7 +654,7 @@ section
 .booking_input_container > div:first-child,
 .booking_input_container > div:nth-child(2)
 {
-	width: 32.60869565217391%;
+	/*width: 32.60869565217391%;*/
 }
 .booking_input_container > div:nth-child(3),
 .booking_input_container > div:nth-child(4)
@@ -1092,6 +1097,7 @@ input[type=number]::-webkit-outer-spin-button
 	bottom: 57px;
 	width: calc(100% - 52px);
 	padding-right: 30px;
+	color: white;
 }
 .blog_date
 {

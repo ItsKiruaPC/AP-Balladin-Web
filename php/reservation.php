@@ -5,8 +5,8 @@ require_once('fermeture.php');
 
 $nomClient = $_SESSION['login'];
 $nohotel = $_REQUEST['txtnohotel'];
-$dateD = $_REQUEST['dateD'];
-$dateF = $_REQUEST['dateF'];
+$dateD = $_REQUEST['txtdateD'];
+$dateF = $_REQUEST['txtdateF'];
 $chambres = array_map('intval', explode(',', trim($_POST["listchambres"])));
 
 $nohotel = intval($nohotel); // Assurez-vous que $nohotel est un entier
@@ -33,8 +33,8 @@ if ($nohotel==0)
   header("Location: ../index.php");
   exit();
 }
-$requete= $cnn->prepare("select * from client where nomClient= :nomClient");
-$requete ->execute(array(':nomClient' => $nomClient));
+$requete= $cnn->prepare("select * from client where nomClient= ?");
+$requete ->execute(array($nomClient));
 $leslignes = $requete->fetch(PDO::FETCH_ASSOC);
 
 if ($leslignes) {
@@ -53,6 +53,7 @@ if ($leslignes) {
       break;
     }
   }
+  //Si elle est disponible alors ...
   if ($chambreDisponible) {
     $requete0 = $cnn->prepare("select max(nores) from reservation");
     $requete0->execute();
@@ -196,7 +197,7 @@ if ($leslignes) {
               <div class="booking_item">
                 <ul>
                   <?php
-
+                  //Si la chambre est disponible et que sa date de fin est plug grande que celle du début
                   if ($chambreDisponible)
                   {
                     if ($dateD >= date("Y-m-d") && $dateF > $dateD)

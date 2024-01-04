@@ -9,9 +9,11 @@ if(!isset($_SESSION['login']))
 }
 //Requête SQL pour voir les réservations attitré à la personne
 $client = $_SESSION['login'];
+$client = htmlspecialchars($client, ENT_QUOTES);
 $cnn = connexionBDD();
-$requete = "select * from reservation inner join hotel on hotel.nohotel = reservation.nohotel inner join client on reservation.noClient=client.noClient where client.nomClient='$client'";
+$requete = "select * from reservation inner join hotel on hotel.nohotel = reservation.nohotel inner join client on reservation.noClient=client.noClient where client.nomClient=?";
 $mesdonnees = $cnn->prepare($requete);
+$mesdonnees->bindParam(1,$client,PDO::PARAM_STR);
 $mesdonnees->execute();
 $leslignes = $mesdonnees->fetchall();
 $i = 1;
@@ -20,11 +22,14 @@ $i = 1;
 if(isset($_REQUEST["btnAnnuler"]))
 {
     $txtnores = $_REQUEST['txtnores'];
-    $requete = "delete from reserv where nores=$txtnores";
+    $txtnores = htmlspecialchars($txtnores, ENT_QUOTES);
+    $requete = "delete from reserv where nores=?";
     $mesdonnees = $cnn->prepare($requete);
+    $mesdonnees->bindParam(1,$txtnores,PDO::PARAM_INT);
     $mesdonnees->execute();
-    $requete = "delete from reservation where nores=$txtnores";
+    $requete = "delete from reservation where nores=?";
     $mesdonnees = $cnn->prepare($requete);
+    $mesdonnees->bindParam(1,$txtnores,PDO::PARAM_INT);
     $mesdonnees->execute();
     header("Location: mesreservation.php");
 }
