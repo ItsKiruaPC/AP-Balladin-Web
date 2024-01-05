@@ -1,7 +1,7 @@
 <?php
 //Appel de page connexion et déconnexion et vérification s'il y a eu une erreur
 session_start();
-require_once('php/ouverture.php');
+require_once('administration/ouverture.php');
 require_once('php/fermeture.php');
 if(!isset($_SESSION['login']))
 {

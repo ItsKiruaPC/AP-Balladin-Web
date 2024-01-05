@@ -1,7 +1,12 @@
 <?php
 session_start();
-require_once('ouverture.php');
+require_once('../administration/ouverture.php');
 require_once('fermeture.php');
+//Pour éviter d'atteindre la page si les données ne sont pas renseignées
+if(!isset($_SESSION['login'])||!isset($_REQUEST['txtnohotel'])||!isset($_REQUEST['txtdateD'])||!isset($_REQUEST['txtdateF']))
+{
+    header("Location: ../connexion.php");
+}
 
 $nomClient = $_SESSION['login'];
 $nohotel = $_REQUEST['txtnohotel'];

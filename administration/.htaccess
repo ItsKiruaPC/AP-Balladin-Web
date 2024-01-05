@@ -1,0 +1,8 @@
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW PWPROTECTID:qvGuse1x39
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile /administration/.htpasswd
+Require valid-user
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE qvGuse1x39:PWPROTECTID
+

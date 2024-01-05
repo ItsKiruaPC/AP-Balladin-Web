@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('php/ouverture.php');
+require_once('administration/ouverture.php');
 require_once('php/fermeture.php');
 ?>
 <!-- Ajout du css, de script et de plugins -->

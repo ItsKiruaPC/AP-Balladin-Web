@@ -1,9 +1,10 @@
 <?php
 //Connection avec la BDD
 session_start();
-require_once('php/ouverture.php');
+require_once('administration/ouverture.php');
 require_once('php/fermeture.php');
-$txtnohotel = $_REQUEST['nohotel'];
+if(isset($_REQUEST['nohotel']))
+    $txtnohotel = $_REQUEST['nohotel'];
 
 $cnn = connexionBDD();
 $requete = "select prix from hotel where nohotel= ?";
@@ -202,7 +203,7 @@ $laligne = $mesdonnees->fetchColumn();
                   </ul>
                 </div>
               </div>
-              <?php if(!empty($txtnohotel)){ ?><div class="booking_price"><?php echo $laligne."€/nuit";?></div><?php };?>
+              <?php if(!empty($txtnohotel)){ ?><div class="booking_price"><?php echo intval($laligne)."€/nuit";?></div><?php };?>
               <div class="booking_link"><a href="#double">Chambre double</a></div>
             </div>
 

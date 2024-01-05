@@ -1,7 +1,7 @@
 <?php
 //Connection à la BDD
 session_start();
-require_once('php/ouverture.php');
+require_once('administration/ouverture.php');
 require_once('php/fermeture.php');
 ?>
 

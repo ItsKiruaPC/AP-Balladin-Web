@@ -1,7 +1,7 @@
 <?php
 //Permet de choisir entre la connection et la création d'un compte
 session_start();
-require_once('ouverture.php');
+require_once('../administration/ouverture.php');
 require_once('fermeture.php');
 $login = $_REQUEST['txtusername'];
 $mdp = $_REQUEST['txtpassword'];
