@@ -16,7 +16,7 @@ if (isset($_SESSION['erreur']))
     </script>';
 }
 $cnn = connexionBDD();
-$requete = "select ville from hotel";
+$requete = "select * from hotel order by ville";
 $mesdonnees=$cnn->prepare($requete);
 $mesdonnees->execute();
 $leslignes = $mesdonnees->fetchall();
@@ -143,7 +143,19 @@ $leslignes = $mesdonnees->fetchall();
 								<form method="post" action="php/rechercher.php" class="booking_form" id="booking_form">
 									<div class="d-flex flex-xl-row flex-column align-items-start justify-content-center">
                                     <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
-                                    <div><input class="booking_input booking_input_b" type="text" name="txtville" id="tags" placeholder="Nom de ville"/></div>
+
+										<!-- Permet d'avoir une liste déroulante des hôtels par ville -->
+									<div>
+										<input placeholder="Veuillez choisir votre hotel" autocomplete="off" list="liste" name="txtville" id="list" class='booking_input booking_input_b'>
+										<datalist id="liste">
+										<?php
+											foreach($leslignes as $uneligne)
+											{
+												echo "<option name='txtville' id='tags' value=".$uneligne['ville']."></option>";
+											}
+										?>
+										</datalist>
+									</div>
                                     <div><input class="booking_input booking_input_b" type="number" autocomplete="off" step="0.01" name="txtprix" placeholder="Prix maximum"/></div>
                                     <div><input class="booking_button trans_200" type="submit" name="btnRechercher" value="Rechercher"/></div>
                                     </div>

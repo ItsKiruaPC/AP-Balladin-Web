@@ -20,7 +20,7 @@
 <?php
 //Permet de rechercher l'hôtel demandé par le prix et/ou la ville
 session_start();
-require_once ('ouverture.php');
+require_once ('../administration/ouverture.php');
 require_once ('fermeture.php');
 unset($_SESSION['erreur']);
 if ($_SERVER["REQUEST_METHOD"] == "POST")
