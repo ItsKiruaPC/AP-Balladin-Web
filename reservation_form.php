@@ -134,28 +134,31 @@ $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varcha
           <div class="home_content text-center">
             <div class="home_title">Réserver une chambre</div>
             <div class="booking_form_container">
-              <form class="booking_form" method="post">
-                <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
-                  <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
-                    <?php
-                    if (!isset($_REQUEST['btnAccept']))
-                    {
-                      ?>
-
-                      <div><p style="color:black; font-weight:bold">Date d'arrivé</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
-                      <div><p style="color:black; font-weight:bold">Date de départ</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
-                      <?php
-                    }
-                    if (!isset($_REQUEST['btnAccept']))
-                    {
-                      ?>
-                      <div><button style="margin-top:30px" class="booking_button trans_200" type="submit" name="btnAccept">Valider</button></div>
-                      <?php
-                    }
-                    ?>
+            <form class="booking_form" method="post">
+                  <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
+                    <div style="background:rgba(0,0,0,0.7);">    
+                        <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
+                        <?php
+                        if (!isset($_REQUEST['btnAccept']))
+                        {
+                        ?>
+                        
+                          <div><p style="color:white; font-weight:bold">Date d'arrivé</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
+                          <div style="padding-right: 0"><p style="color:white; font-weight:bold">Date de départ</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
+                          <?php
+                        }
+                        if (!isset($_REQUEST['btnAccept']))
+                        {
+                        ?>
+                          </div>
+                          </div>
+                          <div><button style="margin-top:30px;" class="booking_button trans_200" type="submit" name="btnAccept">Valider</button></div>
+                        <?php
+                        }
+                        ?>
                   </div>
-                </div>
-              </form>
+            </div>
+            </form>
               <?php
               if (isset($_REQUEST['btnAccept']))
               {

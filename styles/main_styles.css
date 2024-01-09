@@ -629,6 +629,7 @@ section
 {
   display: flex;
   justify-content: center;
+  width: max-content;
 }
 .booking_input
 {
@@ -658,7 +659,7 @@ section
 .booking_input_container > div:nth-child(3),
 .booking_input_container > div:nth-child(4)
 {
-  width: 17.39130434782609%;
+  /*width: 17.39130434782609%;*/
 }
 .header-user {
   background-position: 50%;
