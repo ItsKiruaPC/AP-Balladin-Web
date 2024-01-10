@@ -53,8 +53,6 @@ $leslignes = $mesdonnees->fetchall();
 			<div class="ml-auto d-flex flex-row align-items-center justify-content-start">
 				<nav class="main_nav">
 					<ul class="d-flex flex-row align-items-start justify-content-start">
-
-
 						<li class="active"><a href="index.php">Accueil</a></li>
 						<li><a href="about.php">À propos de nous</a></li>
 						<li><a href="booking.php">Chambres</a></li>

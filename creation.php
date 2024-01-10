@@ -30,7 +30,7 @@ if(isset($_SESSION['login']))
 </div>
 
 <!-- Récupère les données écrites et les renvoie a une page qui détecte soit la connection ou la création -->
-<form method="post" action="php/connexion.php">
+<form method="post" action="php/creation.php">
   <h3>Connexion</h3>
 
   <!-- S'il y a une erreur, elle sera afficher en haut du formulaire -->
@@ -46,9 +46,12 @@ if(isset($_SESSION['login']))
   <label for="password">Mot de passe</label>
   <input type="password" autocomplete="off" placeholder="Mot de passe" id="password" name="txtpassword" required>
 
+  <label for="mail">E-Mail (pas besoin si connexion)</label>
+  <input type="mail" placeholder="Adresse mail" id="mail" name="txtmail" pattern="[A-Za-z0-9]{}" oninvalid="setCustomValidity('Veuillez ne pas utiliser de caractères spéciaux. \nUtiliser seulement de [a-z/A-Z/0-9]')">
+
   <input type="hidden" name="txtnohotel" value="<?php if(isset($_REQUEST['txtnohotel'])){echo $_REQUEST['txtnohotel'];} ?>"/>
-  <input type="submit" name="action" id="btnvalider" value="Connecter"/>
-  <a href="creation.php"><input type="button" value="Création"/></a>
+  <input type="submit" name="action" id="btncreate" value="Création"/>
+  <a href="connexion.php"><input type="button" value="Connexion"/></a>
 </form>
 </body>
 </html>
