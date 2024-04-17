@@ -19,8 +19,10 @@ Effectuer une réservation avec la date souhaitée et les places souhaitées
 
 
 ## **<ins>Fonctionnalité 3 et 4**</ins>
-Pouvoir visualiser les informations d'une réservation effectué grâce à un système d'identification de compte
+Pouvoir visualiser les informations d'une réservation effectué grâce à un système d'identification (numéro réservation + code d'accès)
 Et pouvoir la supprimer au besoin.
+> [!NOTE]
+> J'ai modifié cette partie et j'ai fais un système d'authentification avec un compte
 
 ![image](https://github.com/ItsKiruaPC/AP-Balladin-Web/assets/77117153/09f3e04a-f0bb-424d-acd5-70fba6b05514)
 
