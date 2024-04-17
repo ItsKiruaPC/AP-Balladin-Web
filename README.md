@@ -1,7 +1,11 @@
 # Application en HTML,CSS,JS, Ajax, JQuery sur Balladins (Chaine d'hôtellerie)
 ## Projet réalisé en 2ème année de BTS SIO
->[!IMPORTANT]
+>[!NOTE]
 > Fait par Adrien
+
+>[!IMPORTANT]
+> ## Complexité ajoutée
+> Création d'un système d'authentification de compte
 
 ## Nous avions 4 fonctionnalités à faire et intégrer dans l'application
 ## **<ins>Fonctionnalité 1**</ins>
