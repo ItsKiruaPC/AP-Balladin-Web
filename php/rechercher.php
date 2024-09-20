@@ -18,55 +18,65 @@
   <link rel="stylesheet" type="text/css" href="../styles/booking_responsive.css">
 </head>
 <?php
-//Permet de rechercher l'hôtel demandé par le prix et/ou la ville
-session_start();
-require_once ('../administration/ouverture.php');
-require_once ('fermeture.php');
-unset($_SESSION['erreur']);
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
-$ville=$_REQUEST['txtville'];
-$prix=$_REQUEST['txtprix'];
-$ville=htmlspecialchars($ville, ENT_QUOTES);
-$prix=htmlspecialchars($prix, ENT_QUOTES);
-$ville = '%'.$ville.'%';
-$cnn = connexionBDD();
-$requete="select * from hotel";
+    //Permet de rechercher l'hôtel demandé par le prix et/ou la ville
+    session_start();
+    require_once ('../administration/ouverture.php');
+    require_once ('fermeture.php');
+    unset($_SESSION['erreur']);
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $ville=$_REQUEST['txtville'];
+        $prix=$_REQUEST['txtprix'];
+        $ville=htmlspecialchars($ville, ENT_QUOTES);
+        $prix=htmlspecialchars($prix, ENT_QUOTES);
+        $ville = '%'.$ville.'%';
+        $cnn = connexionBDD();
+        $requete="select * from hotel";
 
-if (!empty($_REQUEST['txtville']))
-{
-  $requete=$requete . " where nom like ?";
+        if (!empty($_REQUEST['txtville']))
+        {
+          $requete=$requete . " where nom like ?";
 
-  if ($prix!="")
-  {
-    $requete=$requete . " and prix < ? order by prix desc";
-    $mesdonnees=$cnn->prepare($requete);
-    $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
-    $mesdonnees->bindParam(2,$prix,PDO::PARAM_INT);
-  }
-  else
-  {
-    $requete = $requete . " order by nom";
-    $mesdonnees=$cnn->prepare($requete);
-    $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
-  }
-}
-else
-{
-  $requete=$requete . " where prix <=? order by prix desc";
-  $mesdonnees=$cnn->prepare($requete);
-  $mesdonnees->bindParam(1,$prix,PDO::PARAM_INT);
-}
-try
-{
-  $mesdonnees->execute();
-
-}
-catch (Exception $e)
-{
-  die('<span> Erreur : </span>'.$e->getMessage());
-}
-$leslignes = $mesdonnees->fetchall();
+          if ($prix!="")
+          {
+            $requete=$requete . " and prix < ? order by prix desc";
+            $mesdonnees=$cnn->prepare($requete);
+            $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
+            $mesdonnees->bindParam(2,$prix,PDO::PARAM_INT);
+          }
+          else
+          {
+            $requete = $requete . " order by nom";
+            $mesdonnees=$cnn->prepare($requete);
+            $mesdonnees->bindParam(1,$ville,PDO::PARAM_STR);
+          }
+        }
+        else
+        {
+          $requete=$requete . " where prix <=? order by prix desc";
+          $mesdonnees=$cnn->prepare($requete);
+          $mesdonnees->bindParam(1,$prix,PDO::PARAM_INT);
+        }
+//      else if (!empty($_REQUEST['txtprix']))
+//      {
+//        $requete=$requete . " where prix <=? order by prix desc";
+//        $mesdonnees=$cnn->prepare($requete);
+//        $mesdonnees->bindParam(1,$prix,PDO::PARAM_INT);
+//      }
+//        else
+//        {
+//          $requete=$requete . " order by nom";
+//          $mesdonnees=$cnn->prepare($requete);
+//        }
+    try
+    {
+      $mesdonnees->execute();
+    }
+    catch (Exception $e)
+    {
+      die('<span> Erreur : </span>'.$e->getMessage());
+    }
+    $leslignes = $mesdonnees->fetchall();
 
 ?>
 <body>

@@ -134,7 +134,7 @@ $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varcha
           <div class="home_content text-center">
             <div class="home_title">Réserver une chambre</div>
             <div class="booking_form_container">
-            <form class="booking_form" method="post">
+            <form class="booking_form" id="booking-form1" method="post">
                   <div class="d-flex flex-xl-row flex-column align-items-left justify-content-center">
                     <div style="background:rgba(0,0,0,0.7);">    
                         <div class="booking_input_container d-flex flex-row align-items-start justify-content-center flex-wrap">
@@ -145,7 +145,8 @@ $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varcha
                         
                           <div><p style="color:white; font-weight:bold">Date d'arrivé</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_in" id="datePickerMin" placeholder="Arriver" name="dateD" required></div>
                           <div style="padding-right: 0"><p style="color:white; font-weight:bold">Date de départ</p><input type="date" autocomplete="off" class=" booking_input booking_input_a booking_out" id="datePickerMax" placeholder="Départ" name="dateF" required></div>
-                          <?php
+
+                            <?php
                         }
                         if (!isset($_REQUEST['btnAccept']))
                         {
@@ -157,13 +158,14 @@ $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varcha
                         }
                         ?>
                   </div>
-            </div>
             </form>
+            </div>
+
               <?php
               if (isset($_REQUEST['btnAccept']))
               {
               ?>
-              <form action="php/reservation.php" class="booking_form2" method="post">
+              <form action="personne.php" class="booking_form2" id="booking-form2" method="post">
                 <link rel="stylesheet" href="styles/multi-select.css">
                 <div id="multi-select">
                   <input type='hidden' id='inputSelectedItems' name="listchambres">
@@ -192,13 +194,16 @@ $req = $cnn->prepare("SELECT nochambre FROM chambre WHERE nohotel=CONVERT(varcha
                     UpdateItems(listItemsUpdateStr, listAllItemsStr);
                   </script>
                   <!-- Fin de Tom -->
+                    <div style="padding-right: 0"><p style="color:white; font-weight:bold">Nombre personnes</p><input type="number" autocomplete="off" class=" booking_input booking_input_a booking_out" id="nombrePersonne" placeholder="Nombre de personnes" name="personneF" required></div>
                 </div>
+
                 <input type="hidden" name="txtnohotel" value="<?php if($txtnohotel!=""){echo $txtnohotel;} unset($_SESSION['txtnohotel'])?>" readonly/>
                 <input type="hidden" name="txtdateD" value="<?php if(isset($_REQUEST['dateD'])){echo $_REQUEST['dateD'];} ?>"/>
+<!--                <input type="hidden" name="listchambres" value="--><?php //if($leslignes!=""){echo $leslignes;} ?><!--"/>-->
                 <input type="hidden" name="txtdateF" value="<?php if(isset($_REQUEST['dateF'])){echo $_REQUEST['dateF'];} ?>"/>
-            </div>
             <button class="booking_button trans_200" type="submit">Reserver maintenant</button>
             </form>
+          </div>
             <?php
             }
             ?>

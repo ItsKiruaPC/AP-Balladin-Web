@@ -7,12 +7,12 @@ if(!isset($_SESSION['login'])||!isset($_REQUEST['txtnohotel'])||!isset($_REQUEST
 {
     header("Location: ../connexion.php");
 }
-
+$nbPersonne = $_REQUEST['nbPersonne'];
 $nomClient = $_SESSION['login'];
 $nohotel = $_REQUEST['txtnohotel'];
 $dateD = $_REQUEST['txtdateD'];
 $dateF = $_REQUEST['txtdateF'];
-$chambres = array_map('intval', explode(',', trim($_POST["listchambres"])));
+$chambres = array_map('intval', explode(',', trim($_REQUEST["listchambres"])));
 
 $nohotel = intval($nohotel); // Assurez-vous que $nohotel est un entier
 $dateD = htmlspecialchars($dateD, ENT_QUOTES);
@@ -61,9 +61,16 @@ if ($leslignes) {
       $requete2 = $cnn->prepare("INSERT INTO reserv VALUES (?, ?, ?)");
       $requete2->execute(array($donnee, $nohotel, $unechambre));
     }
+      for($i = 0; $i<$nbPersonne; $i++) {
+          $nomP = $_REQUEST['prenom'.$i];
+          $nomN = $_REQUEST['nom'.$i];
+          $requete3 = $cnn->prepare("INSERT INTO personne(nom,prenom,idReservation) VALUES (?, ?, ?)");
+          $requete3->execute(array($nomN, $nomP, $donnee));
+      }
   }
   else
   {
+      echo $dateD;
     $_SESSION['erreur'] = "La date est soit trop ancienne comparer à aujourd'hui ou la date de fin s'arrete avant le début";
   }
 }

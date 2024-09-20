@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
 function afficher()
 {
   var id = document.getElementById("test");

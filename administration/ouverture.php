@@ -11,7 +11,6 @@ function connexionBDD()
         $cnn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //en commentaire pour éviter de donner des infos aux hackeur
         //echo "Connexion réussie à la base de données SQL Server.";
         return $cnn;
-
     }
     catch (PDOException $e)
     {

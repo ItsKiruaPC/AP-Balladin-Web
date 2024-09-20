@@ -8,7 +8,7 @@ if (isset($_SESSION['erreur']))
 {
     echo '<script>
     setTimeout(function() {
-        window.location.href = window.location.href.split("?")[0];
+        //window.location.href = window.location.href.split("?")[0];
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "unset_session.php", true);
         xhr.send();
@@ -363,7 +363,6 @@ $leslignes = $mesdonnees->fetchall();
 								<div class="booking_price">60€/nuit</div>
 								<div class="booking_link"><a href="booking.php">Chambre simple</a></div>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -416,7 +415,7 @@ $leslignes = $mesdonnees->fetchall();
 						<div class="footer_title">Newsletter</div>
 						<div class="newsletter_container">
 							<form action="#" class="newsletter_form" id="newsletter_form">
-								<input type="email" class="newsletter_input" placeholder="Votre adresse e-mail" required="required">
+                                <input type="email" class="newsletter_input" placeholder="Votre adresse e-mail" required="required">
 								<button class="newsletter_button">S'abonner</button>
 							</form>
 						</div>

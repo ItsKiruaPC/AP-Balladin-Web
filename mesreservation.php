@@ -11,16 +11,19 @@ if(!isset($_SESSION['login']))
 $client = $_SESSION['login'];
 $client = htmlspecialchars($client, ENT_QUOTES);
 $cnn = connexionBDD();
-$requete = "select * from reservation inner join hotel on hotel.nohotel = reservation.nohotel inner join client on reservation.noClient=client.noClient where client.nomClient=? order by reservation.datedeb";
+$requete = "select * from reservation inner join hotel on hotel.nohotel = reservation.nohotel inner join client on reservation.noClient=client.noClient where client.nomClient=?  order by reservation.datedeb";
 $mesdonnees = $cnn->prepare($requete);
 $mesdonnees->bindParam(1,$client,PDO::PARAM_STR);
 $mesdonnees->execute();
 $leslignes = $mesdonnees->fetchall();
 $i = 1;
 
+
+
 //Requête SQL pour supprimer la réservation
 if(isset($_REQUEST["btnAnnuler"]))
 {
+
   $txtnores = $_REQUEST['txtnores'];
   $txtnores = htmlspecialchars($txtnores, ENT_QUOTES);
   $requete = "delete from reserv where nores=?";
@@ -183,7 +186,7 @@ if(isset($_REQUEST["btnAnnuler"]))
           <div class="splide__track">
             <ul class="splide__list">
               <?php
-              $requete1 = "select * from photo where nohotel='$uneligne[nohotel]'";
+              $requete1="select * from photo where nohotel='$uneligne[nohotel]'";
               $mesdonnees1=$cnn->prepare($requete1);
               $mesdonnees1->execute();
               $leslignes1 = $mesdonnees1->fetchall();
@@ -195,6 +198,10 @@ if(isset($_REQUEST["btnAnnuler"]))
               $mesdonnees3=$cnn->prepare($requete2);
               $mesdonnees3->execute();
               $leslignes3 = $mesdonnees3->fetchall();
+              $requete3="select * from personne where idReservation='$uneligne[nores]'";
+              $mesdonnees4=$cnn->prepare($requete3);
+              $mesdonnees4->execute();
+              $leslignes4 = $mesdonnees4->fetchall();
 
               foreach ($leslignes1 as $photo)
               {?>
@@ -216,6 +223,13 @@ if(isset($_REQUEST["btnAnnuler"]))
           echo "<h3>Chambre(s): ".substr($chambresString, 0, -1)."</h3>";
           echo "<h3>Date d'arrivé: ".$dateDeb->format('d/m/Y')."</h3>";
           echo "<h3>Date de départ: ".$dateFin->format('d/m/Y')."</h3>";
+          foreach ($leslignes4 as $item)
+          {
+              echo "<div style='display: flex'>";
+              echo "<h3>Nom: ".$item['nom']."</h3>";
+              echo "<h3 style='padding-left: 50px'>Prenom: ".$item['prenom']."</h3>";
+              echo "</div>";
+          }
           foreach ($leslignes2 as $unequipement)
           {?>
             <div class="flex-row">
