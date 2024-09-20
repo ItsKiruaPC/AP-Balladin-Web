@@ -1,8 +1,8 @@
 <?php
 //Appel de page connexion et déconnexion et vérification s'il y a eu une erreur
 session_start();
-require_once('administration/ouverture.php');
-require_once('php/fermeture.php');
+require_once('../administration/ouverture.php');
+require_once('../php/fermeture.php');
 
 if (isset($_SESSION['erreur'])) 
 {
@@ -10,7 +10,7 @@ if (isset($_SESSION['erreur']))
     setTimeout(function() {
         //window.location.href = window.location.href.split("?")[0];
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "unset_session.php", true);
+        xhr.open("POST", "../unset_session.php", true);
         xhr.send();
     },3000); // Redirection après 3 secondes
     </script>';
